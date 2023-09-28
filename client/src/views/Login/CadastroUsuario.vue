@@ -65,7 +65,6 @@ import axios from 'axios';
         },  
         mounted(){
             this.$refs.validation.required('login',"Login")
-            //this.$refs.validation.senha('senha',"Senha")
             this.$refs.validation.required('nome',"Nome")
             this.$refs.validation.required('senha',"Senha")
         }      

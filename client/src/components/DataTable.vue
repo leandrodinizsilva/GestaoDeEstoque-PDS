@@ -87,6 +87,7 @@
                 this.totalPaginas =  Math.ceil(this.originalData.length / this.pageSize)
             },
             dataPaginado() {
+                console.log(this.originalData)
                 const start = (this.paginaAtual - 1) * this.pageSize
                 const end = start + this.pageSize
                 this.data = this.originalData.slice(start, end)

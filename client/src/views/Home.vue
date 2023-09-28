@@ -1,5 +1,4 @@
 ﻿<template>
-aas
   <ToastComponent ref="toast"></ToastComponent>
 </template>
 

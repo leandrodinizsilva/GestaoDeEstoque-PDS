@@ -9,6 +9,11 @@
                   <router-link to="/Home" class="nav-link">Home</router-link>
                 </li>
             </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <router-link to="/Deposito" class="nav-link">Depósito</router-link>
+                </li>
+            </ul>
         </div>
         <a style="color:gray;">Bem vindo</a>
         <a style="color:gray; font-weight: 600;">{{getNomeUsuarioLogado}}</a>
@@ -44,13 +49,13 @@ export default {
 
 <style>
 #logout{
-  color:#628E90;
+  color:#EA738D;
   margin-right: 30px;
   cursor: pointer;
 }
 
 #logout:hover{
-  color:#34495E;
+  color:#FFB6C1;
 }
 .spanErro{
   color: red !important;
@@ -67,17 +72,17 @@ a{
 }
 
 .primaryColorBtn{
-  background-color:#34495E !important;
-  border-color: #34495E !important
+  background-color:#EA738D !important;
+  border-color: #EA738D !important
 }
 
 .secondaryColorBtn{
-  background-color:#19381f !important;
-  border-color: #19381f !important
+  background-color:#89ABE3 !important;
+  border-color: #89ABE3 !important
 }
 
 .secondaryColor{
-  color: #19381f !important;
+  color: #89ABE3 !important;
 }
 
 .spanErro{
@@ -89,6 +94,6 @@ body{
 }
 
 .nav-link:hover{
-  color:#34495E !important;
+  color:#EA738D !important;
 }
 </style>
