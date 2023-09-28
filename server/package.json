@@ -1,0 +1,30 @@
+{
+  "type": "module",
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "myapp",
+  "main": "index.js",
+  "scripts": {
+    "test": "teste"
+  },
+  "repository": {
+    "type": "git",
+    "url": "null"
+  },
+  "keywords": [
+    "null"
+  ],
+  "author": "helio",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "md5": "^2.3.0",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12"
+  }
+}
