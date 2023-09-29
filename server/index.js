@@ -2,9 +2,11 @@ import express from 'express';
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import UsuarioController from './controllers/usuarioController.js';
+import DepositoController from './controllers/depositoController.js';
 import jwt from'jsonwebtoken'
 
 const usuarioController = new UsuarioController
+const depositoController = new DepositoController
 
 const app = express()
 
@@ -37,9 +39,15 @@ function validaJWT(req, res, next){
     });
 }
 
-app.post('/usuario/add', usuarioController.createNovoUsuario)
+app.post('/usuario/add', usuarioController.add)
 app.post('/usuario/validar', usuarioController.login);
 app.get("/usuario", validaJWT, usuarioController.index);
+
+app.post("/deposito", validaJWT, depositoController.index);
+app.post("/deposito/add", validaJWT, depositoController.add);
+app.post("/deposito/update", validaJWT, depositoController.update);
+app.post("/deposito/delete", validaJWT, depositoController.delete);
+app.post("/deposito/carregarRegistro", validaJWT, depositoController.carregarRegistro);
 
 app.use(function(req, res){
     res.status(404);

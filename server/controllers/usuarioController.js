@@ -16,7 +16,7 @@ class UsuarioController{
             res.json({"data":rows })
        });
     }
-    createNovoUsuario(req, res){
+    add(req, res){
         let validacao = `SELECT * FROM usuario where login = ?`
         let sql = `INSERT INTO usuario (login, nome, senha) VALUES (?,?,?)`
         let nome = req.body.nome
@@ -52,7 +52,7 @@ class UsuarioController{
             else{
                 if(rows.length > 0){
                     const token = jwt.sign( { id: rows[0].id } , 'f9bf78b9a18ce6d46a0cd2b0b86df9da', {
-                        expiresIn: 1
+                        expiresIn: 1000000000
                     });
                     res.json({valido: true, usuario: rows[0], token: token})
                 }
