@@ -58,6 +58,8 @@ O back-end sera feito em node e o banco de dados escolhidos é o SQlite para fac
 |9| Implementar back-end da listagem de estoques | Hélio Martins |
 |10| Implementar na tela de listagem a busca de estoque por palavra chave| Leandro Diniz |
 
+<h3> Backlog de Sprint #2</h3>
+
 * História #2: Como usuário gostaria de me cadastrar no sistema.
 
 | # | Tarefas | Responsáveis |
