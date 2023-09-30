@@ -3,10 +3,14 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import UsuarioController from './controllers/usuarioController.js';
 import DepositoController from './controllers/depositoController.js';
+import MaterialController from './controllers/materialController.js';
+import UnidadeController from './controllers/unidadeController.js';
 import jwt from'jsonwebtoken'
 
 const usuarioController = new UsuarioController
 const depositoController = new DepositoController
+const materialController = new MaterialController
+const unidadeController = new UnidadeController
 
 const app = express()
 
@@ -48,6 +52,18 @@ app.post("/deposito/add", validaJWT, depositoController.add);
 app.post("/deposito/update", validaJWT, depositoController.update);
 app.post("/deposito/delete", validaJWT, depositoController.delete);
 app.post("/deposito/carregarRegistro", validaJWT, depositoController.carregarRegistro);
+
+app.post("/material", validaJWT, materialController.index);
+app.post("/material/add", validaJWT, materialController.add);
+app.post("/material/update", validaJWT, materialController.update);
+app.post("/material/delete", validaJWT, materialController.delete);
+app.post("/material/carregarRegistro", validaJWT, materialController.carregarRegistro);
+
+app.post("/unidade", validaJWT, unidadeController.index);
+app.post("/unidade/add", validaJWT, unidadeController.add);
+app.post("/unidade/update", validaJWT, unidadeController.update);
+app.post("/unidade/delete", validaJWT, unidadeController.delete);
+app.post("/unidade/carregarRegistro", validaJWT, unidadeController.carregarRegistro);
 
 app.use(function(req, res){
     res.status(404);

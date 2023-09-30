@@ -3,7 +3,7 @@
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Depósitos</h3>
     <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Depósito <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
-        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" @editar="editar" @excluir="excluir" :id="'id'"></DataTable>
+        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" :showAddButton="true" @editar="editar" @excluir="excluir" @addItem="material" :id="'id'" ></DataTable>
     </div>
 
     <ModalPergunta ref="modalPergunta"></ModalPergunta>
@@ -29,13 +29,16 @@ import axios from 'axios'
             }
         },
         methods: {
-            inserir(){
+          inserir(){
             this.$router.push({ name: 'CadastroEdicaoDeposito', params: { codigoDeposito: 0 } })
           },
-          editar(Deposito){
-            this.$router.push({ name: 'CadastroEdicaoDeposito', params: { codigoDeposito: Deposito.id } })
+          material(depositoId){
+            this.$router.push({ name: 'ListaMaterial', params: { codigoDeposito: depositoId } })
           },
-          async excluir(Deposito) { 
+          editar(deposito){
+            this.$router.push({ name: 'CadastroEdicaoDeposito', params: { codigoDeposito: deposito.id } })
+          },
+          async excluir(deposito) { 
             const ok = await this.$refs.modalPergunta.show({
                 title: 'Excluir Depósito',
                 message: 'Tem certeza que gostaria de excluir o Deposito?',
@@ -43,7 +46,7 @@ import axios from 'axios'
             })
 
             if (ok) {
-                axios.post('deposito/delete', {id: Deposito.id}).then(() => {
+                axios.post('deposito/delete', {id: deposito.id}).then(() => {
                       this.$refs.toast.ativar('Deposito excluído com sucesso.', 'sucesso'),
                       this.$refs.dataTable.load()
                 })
@@ -54,9 +57,3 @@ import axios from 'axios'
         }      
     }
 </script>
-
-<style>
-
-
-</style>
-

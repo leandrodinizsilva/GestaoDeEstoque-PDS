@@ -9,6 +9,24 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
       throw err
     }else{
         console.log('Connected to the SQLite database.')
+
+        db.run(`CREATE TABLE IF NOT EXISTS Unidade (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome text,
+            usuarioId INTEGER,
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)  
+        )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS Material (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome text,
+            unidadeId INTEGER,
+            preco float,
+            depositoId INTEGER,
+            FOREIGN KEY (depositoId) REFERENCES Deposito(id),
+            FOREIGN KEY (unidadeId) REFERENCES Unidade(id)    
+        )`);
+        
         db.run(`CREATE TABLE IF NOT EXISTS Deposito (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome text,

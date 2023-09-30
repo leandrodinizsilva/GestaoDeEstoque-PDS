@@ -14,6 +14,11 @@
                   <router-link to="/Deposito" class="nav-link">Depósito</router-link>
                 </li>
             </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <router-link to="/Unidade" class="nav-link">Unidade</router-link>
+                </li>
+            </ul>
         </div>
         <a style="color:gray;">Bem vindo</a>
         <a style="color:gray; font-weight: 600;">{{getNomeUsuarioLogado}}</a>

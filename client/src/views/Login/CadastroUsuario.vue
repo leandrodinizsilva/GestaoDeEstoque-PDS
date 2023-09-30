@@ -3,8 +3,8 @@
         <div id="loginDiv">
             <ValidationForm id="cadastroForm" :model="usuario" ref="validation" @save="salvar(usuario)">
                 <div style="display:flex">
-                    <font-awesome-icon @click="irParaLogin()" style="font-size:xx-large; margin-right: 15px; cursor:pointer" icon="fa-solid fa-arrow-left" />
-                    <h3 id="cadastroUsuarioTitle">Cadastro</h3>
+                    <font-awesome-icon class="secondaryColor" @click="irParaLogin()" style="font-size:xx-large; margin-right: 15px; cursor:pointer" icon="fa-solid fa-arrow-left" />
+                    <h3 class="secondaryColor" id="cadastroUsuarioTitle">Cadastro</h3>
                 </div>
                 <div class="container" id="loginContainer">                    
                     <div class="divInput">

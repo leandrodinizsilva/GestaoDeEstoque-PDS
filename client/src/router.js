@@ -4,6 +4,10 @@ import HomeView from './views/Home.vue'
 import CadastroUsuarioView from './views/Login/CadastroUsuario.vue'
 import ListaDepositoView from './views/Deposito/ListaDeposito.vue'
 import CadastroEdicaoDepositoView from './views/Deposito/CadastroEdicaoDeposito.vue'
+import ListaUnidadeView from './views/Unidade/ListaUnidade.vue'
+import CadastroEdicaoUnidadeView from './views/Unidade/CadastroEdicaoUnidade.vue'
+import ListaMaterialView from './views/Material/ListaMaterial.vue'
+import CadastroEdicaoMaterialView from './views/Material/CadastroEdicaoMaterial.vue'
 
 const routes = [
     {
@@ -30,6 +34,26 @@ const routes = [
         path: '/Deposito/CadastroEdicao/:codigoDeposito',
         name: 'CadastroEdicaoDeposito',
         component: CadastroEdicaoDepositoView,
+    },
+    {
+        path: '/Unidade',
+        name: 'ListaUnidade',
+        component: ListaUnidadeView,
+    },
+    {
+        path: '/Unidade/CadastroEdicao/:codigoUnidade',
+        name: 'CadastroEdicaoUnidade',
+        component: CadastroEdicaoUnidadeView,
+    },
+    {
+        path: '/Material/:codigoDeposito',
+        name: 'ListaMaterial',
+        component: ListaMaterialView,
+    },
+    {
+        path: '/Material/CadastroEdicao/:codigoDeposito/:codigoMaterial',
+        name: 'CadastroEdicaoMaterial',
+        component: CadastroEdicaoMaterialView,
     },
     
 ]

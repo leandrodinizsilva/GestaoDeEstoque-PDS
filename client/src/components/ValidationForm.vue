@@ -55,7 +55,7 @@
                 document.querySelectorAll('span[name=' + field + ']')[0].innerHTML = msg
             },
             limparErros(){
-                let spans = document.querySelectorAll('span')
+                let spans = document.querySelectorAll('.spanErro')
                 spans.forEach(element => {
                     element.innerHTML = ''
                 })
