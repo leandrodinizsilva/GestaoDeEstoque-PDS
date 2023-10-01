@@ -33,7 +33,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">R$</span>
                                     </div>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" v-model="material.preco">
                                 </div>   
                             </div>
                         </div>
@@ -66,6 +66,7 @@
                     id: this.$route.params.codigomaterial,
                     nome: null,
                     unidadeId: null,
+                    preco: null,
                     depositoId: this.$route.params.codigoDeposito
                 },
                 unidades: null

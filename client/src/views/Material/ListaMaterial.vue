@@ -24,8 +24,8 @@ import axios from 'axios'
         components: { DataTable, ModalPergunta, ToastComponent },
         data() {
             return {
-                colLabels: ['Nome'],
-                dataFields: ['nome'],
+                colLabels: ['Nome', 'Preco'],
+                dataFields: ['nome', 'preco'],
             }
         },
         methods: {
