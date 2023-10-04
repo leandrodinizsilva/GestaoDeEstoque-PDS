@@ -1,66 +1,29 @@
-import db from '../database.js'
-import jwt from 'jsonwebtoken';
+import UsuarioRepositorio from '../repositorios/usuarioRepositorio.js';
+import Usuario from '../entidades/usuario.js'
+import LoginDTO from '../dtos/loginDTO.js'
+
+const usuarioRepositorio = new UsuarioRepositorio
 
 class UsuarioController{
     constructor(){
 
     }
     index(req, res){
-        var sql = "select * from usuario"
-        var params = []
-        db.all(sql, params, (err, rows) => {
-            if (err) {
-                res.status(400).json({"mensagem":err.message});
-                return;
-            }
-            res.json({"data":rows })
-       });
+        let promise = usuarioRepositorio.index()
+        promise.then(function(result){ res.json({"data": result }) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+
     }
     add(req, res){
-        let validacao = `SELECT * FROM usuario where login = ?`
-        let sql = `INSERT INTO usuario (login, nome, senha) VALUES (?,?,?)`
-        let nome = req.body.nome
-        let login = req.body.login
-        let senha = req.body.senha
-     
-        db.all(validacao, [login], function (err, result){
-            if(err)
-                throw err
-            else{
-                if(result.length > 0)
-                    res.json({valido: false})
-                else{
-                    db.run(sql, [login, nome, senha], function (err, result){
-                        if(err)
-                            throw err
-                        else{
-                            res.json({valido: true})
-                        }
-                    })
-                }
-            }
-        })    
+        let usuario = new Usuario(req.body.nome, req.body.login, req.body.senha)
+        
+        let promise = usuarioRepositorio.add(usuario, res)
+        promise.then(function(result){ res.json({"valido": result }) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });   
     }
     login(req, res){
-        let sql = `SELECT * from usuario where login = ? and senha = ?`
-        let login = req.body.login
-        let senha = req.body.senha
-
-        db.all(sql, [login, senha], function (err, rows){
-            if(err)
-                throw err
-            else{
-                if(rows.length > 0){
-                    const token = jwt.sign( { id: rows[0].id } , 'f9bf78b9a18ce6d46a0cd2b0b86df9da', {
-                        expiresIn: 1000000000
-                    });
-                    res.json({valido: true, usuario: rows[0], token: token})
-                }
-                    
-                else
-                    res.json({valido: false, usuario: null, token: null})
-            }
-        })
+        let loginDTO = new LoginDTO(req.body.login, req.body.senha)
+        
+        let promise = usuarioRepositorio.login(loginDTO, res);
+        promise.then(function(result){ res.json({valido: result.valido, usuario: result.usuario, token: result.token}) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });   
     }
 }
 

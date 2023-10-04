@@ -22,6 +22,7 @@ class MaterialController{
         let unidadeId = req.body.unidadeId
         let preco = req.body.preco
         let depositoId = req.body.depositoId
+        console.log(preco)
      
         db.run(sql, [nome, unidadeId, preco, depositoId], function (err, result){ 
             if(err)

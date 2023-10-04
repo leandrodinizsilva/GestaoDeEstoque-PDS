@@ -74,7 +74,7 @@
             },
             recuperarDados() { 
                 axios.post('deposito/carregarRegistro', {id: this.deposito.id}).then( (result) => {
-                    this.deposito.nome = result.data[0].nome                
+                    this.deposito.nome = result.data.nome                
                    }
                 )
             },

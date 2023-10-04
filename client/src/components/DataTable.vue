@@ -127,11 +127,13 @@
             load(){
                 if(!this.paramsUrl){
                     axios.post(this.dataUrl).then( (result) => {
+                        //console.log(result)
                         this.dataOp(result)
                     })
                 }
                 else{
                     axios.post(this.dataUrl, this.paramsUrl).then( (result) => {
+                        //console.log(result)
                         this.dataOp(result)           
                     })
                 } 
