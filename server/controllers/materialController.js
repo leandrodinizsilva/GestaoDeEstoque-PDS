@@ -1,75 +1,41 @@
-import db from '../database.js'
+import MaterialRepositorio from "../repositorios/materialRepositorio.js";
+import Material from '../entidades/material.js';
+
+const materialRepositorio = new MaterialRepositorio
 
 class MaterialController{
     constructor(){
 
     }
     index(req, res){
-        var sql = "select * from Material where depositoId = ?"
-        var depositoId = req.body.depositoId
+        let depositoId = req.body.depositoId
 
-        db.all(sql, [depositoId], (err, rows) => {
-            if (err) {
-                res.status(400).json({"mensagem":err.message});
-                return;
-            }
-            res.json(rows)
-       });
+        let promise = materialRepositorio.index(depositoId)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     add(req, res){
-        let sql = `INSERT INTO Material (nome, unidadeId, preco, depositoId) VALUES (?,?,?,?)`
-        let nome = req.body.nome
-        let unidadeId = req.body.unidadeId
-        let preco = req.body.preco
-        let depositoId = req.body.depositoId
-        console.log(preco)
-     
-        db.run(sql, [nome, unidadeId, preco, depositoId], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        let material = new Material(null, req.body.nome, req.body.unidadeId, req.body.preco, req.body.depositoId)
+
+        let promise = materialRepositorio.add(material)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     delete(req, res){
-        let sql = `DELETE FROM Material WHERE id = ?`
         let id = req.body.id
-     
-        db.run(sql, [id], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        
+        let promise = materialRepositorio.delete(id)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     update(req, res){
-        let sql = `UPDATE Material SET nome = ?, unidadeId = ?, preco = ? where id = ?`
-        let nome = req.body.nome
-        let id = req.body.id
-        let unidadeId = req.body.unidadeId
-        let preco = req.body.preco
-     
-        db.run(sql, [nome, unidadeId, preco, id], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        let material = new Material(req.body.id, req.body.nome, req.body.unidadeId, req.body.preco, req.body.depositoId)
+
+        let promise = materialRepositorio.update(material)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     carregarRegistro(req, res){
-        let sql = `SELECT * FROM Material WHERE id = ?`
         let id = req.body.id
-        db.all(sql, [id], (err, rows) => {
-            if (err) {
-                console.error(err.message);
-                res.status(500).send({message: err.message});
-            } else {
-                res.status(200).send(rows);
-            }
-        });
+
+        let promise = materialRepositorio.carregarRegistro(id)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
 }
 

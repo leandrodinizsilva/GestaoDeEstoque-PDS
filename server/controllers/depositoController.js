@@ -1,6 +1,5 @@
-import db from '../database.js'
 import index from '../index.js'
-import DepositoRepositorio from '../repositorios/depositorioRepositorio.js';
+import DepositoRepositorio from '../repositorios/depositoRepositorio.js';
 import Deposito from '../entidades/deposito.js'
 
 const depositoRepositorio = new DepositoRepositorio

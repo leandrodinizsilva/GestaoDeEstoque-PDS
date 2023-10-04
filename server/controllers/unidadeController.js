@@ -1,72 +1,41 @@
 import db from '../database.js'
 import index from '../index.js'
+import UnidadeRepositorio from '../repositorios/unidadeRepositorio.js';
+import Unidade from '../entidades/unidade.js'
+
+const unidadeRepositorio = new UnidadeRepositorio
 
 class UnidadeController{
     constructor(){
 
     }
     index(req, res){
-        var sql = "select * from Unidade where usuarioId = ?"
-        var usuarioId = index.usuarioId()
-
-        db.all(sql, [usuarioId], (err, rows) => {
-            if (err) {
-                res.status(400).json({"mensagem":err.message});
-                return;
-            }
-            res.json(rows)
-       });
+        let promise = unidadeRepositorio.index(index.usuarioId())
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     add(req, res){
-        let sql = `INSERT INTO Unidade (nome, usuarioId) VALUES (?,?)`
-        let nome = req.body.nome
-        var usuarioId = index.usuarioId()
+        let unidade = new Unidade(null, req.body.nome, index.usuarioId()) 
 
- 
-        db.run(sql, [nome, usuarioId], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        let promise = unidadeRepositorio.add(unidade)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); }); 
     }
     delete(req, res){
-        let sql = `DELETE FROM Unidade WHERE id = ?`
         let id = req.body.id
-     
-        db.run(sql, [id], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        
+        let promise = unidadeRepositorio.delete(id)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });  
     }
     update(req, res){
-        let sql = `UPDATE Unidade SET nome = ? where id = ?`
-        let nome = req.body.nome
-        let id = req.body.id
-     
-        db.run(sql, [nome, id], function (err, result){ 
-            if(err)
-                throw err
-            else{
-                res.json("")
-            }
-        })   
+        let unidade = new Unidade(req.body.id, req.body.nome, index.usuarioId()) 
+
+        let promise = unidadeRepositorio.update(unidade)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });  
     }
     carregarRegistro(req, res){
-        let sql = `SELECT * FROM Unidade WHERE id = ?`
         let id = req.body.id
-        db.all(sql, [id], (err, rows) => {
-            if (err) {
-                console.error(err.message);
-                res.status(500).send({message: err.message});
-            } else {
-                res.status(200).send(rows);
-            }
-        });
+
+        let promise = unidadeRepositorio.carregarRegistro(id)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
 }
 

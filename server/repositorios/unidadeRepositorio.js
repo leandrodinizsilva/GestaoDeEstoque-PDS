@@ -1,12 +1,12 @@
 import db from '../database.js'
 
-class DepositoRepositorio{
+class UnidadeRepositorio{
     constructor(){
 
     }
     index(usuarioId){
-        var sql = "select * from deposito where usuarioId = ?"
-    
+        var sql = "select * from Unidade where usuarioId = ?"
+
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {
                 if (err) {
@@ -16,33 +16,33 @@ class DepositoRepositorio{
            });
         })
     }
-    add(deposito){
-        let sql = `INSERT INTO deposito (nome, usuarioId) VALUES (?,?)`
-
+    add(unidade){
+        let sql = `INSERT INTO Unidade (nome, usuarioId) VALUES (?,?)`
+ 
         return new Promise((resolve, reject) => {
-            db.all(sql, [deposito.nome, deposito.usuarioId], function (err, result){ 
+            db.run(sql, [unidade.nome, unidade.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve("")
-            }) 
-        })
+            })  
+        }) 
     }
     delete(id){
-        let sql = `DELETE FROM deposito WHERE id = ?`
-     
+        let sql = `DELETE FROM Unidade WHERE id = ?`
+
         return new Promise((resolve, reject) => {
-            db.all(sql, [id], function (err, result){ 
+            db.run(sql, [id], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve("")
-            }) 
-        })  
+            })
+        })   
     }
-    update(deposito){
-        let sql = `UPDATE deposito SET nome = ? where id = ?`
-
+    update(unidade){
+        let sql = `UPDATE Unidade SET nome = ? where id = ?`
+     
         return new Promise((resolve, reject) => {
-            db.all(sql, [deposito.nome, deposito.id], function (err, result){ 
+            db.run(sql, [unidade.nome, unidade.id], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve("")
@@ -50,17 +50,17 @@ class DepositoRepositorio{
         })  
     }
     carregarRegistro(id){
-        let sql = `SELECT * FROM deposito WHERE id = ?`
-       
+        let sql = `SELECT * FROM Unidade WHERE id = ?`
+  
         return new Promise((resolve, reject) => {
             db.all(sql, [id], (err, rows) => {
                 if (err) {
                     reject(err)
-                }
+                } 
                 resolve(rows[0])
             });
         })
     }
 }
 
-export default DepositoRepositorio
+export default UnidadeRepositorio

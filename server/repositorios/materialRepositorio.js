@@ -1,0 +1,66 @@
+import db from '../database.js'
+
+class MaterialRepositorio{
+    constructor(){
+
+    }
+    index(depositoId){
+        var sql = "select * from Material where depositoId = ?"
+
+        return new Promise((resolve, reject) => {
+            db.all(sql, [depositoId], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows)
+           });
+        })
+    }
+    add(material){
+        let sql = `INSERT INTO Material (nome, unidadeId, preco, depositoId) VALUES (?,?,?,?)`
+     
+        return new Promise((resolve, reject) => {
+            db.run(sql, [material.nome, material.unidadeId, material.preco, material.depositoId], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve("")
+            })  
+        })
+    }
+    delete(id){
+        let sql = `DELETE FROM Material WHERE id = ?`
+     
+        return new Promise((resolve, reject) => {
+            db.run(sql, [id], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve("")
+            })
+        })   
+    }
+    update(material){
+        let sql = `UPDATE Material SET nome = ?, unidadeId = ?, preco = ?, depositoId = ? where id = ?`
+     
+        return new Promise((resolve, reject) => {
+            db.run(sql, [material.nome, material.unidadeId, material.preco, material.depositoId, material.id], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve("")
+            })
+        })   
+    }
+    carregarRegistro(id){
+        let sql = `SELECT * FROM Material WHERE id = ?`
+
+        return new Promise((resolve,reject) => {
+            db.all(sql, [id], (err, rows) => {
+                if (err) {
+                    reject(err)
+                } 
+                resolve(rows[0])
+            });
+        })
+    }
+}
+
+export default MaterialRepositorio

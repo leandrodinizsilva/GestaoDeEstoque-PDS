@@ -63,7 +63,7 @@
         data() {
             return {
                 material: {
-                    id: this.$route.params.codigomaterial,
+                    id: this.$route.params.codigoMaterial,
                     nome: null,
                     unidadeId: null,
                     preco: null,
@@ -103,14 +103,15 @@
             },
             recuperarDados() { 
                 axios.post('material/carregarRegistro', {id: this.material.id}).then( (result) => {
-                    this.material.nome = result.data[0].nome                
+                        this.material.nome = result.data.nome 
+                        this.material.preco = result.data.preco
+                        this.material.unidadeId = result.data.unidadeId               
                    }
                 )
             },
             carregarUnidades() {
                 axios.post('unidade').then( (result) => {
-                    this.unidades = result.data
-                    console.log(this.unidades[0])                
+                    this.unidades = result.data           
                    }
                 )
             }
@@ -123,6 +124,7 @@
 
             this.$refs.validation.required('nome','Nome')
             this.$refs.validation.required('unidadeId','Unidade')
+            this.$refs.validation.required('preco','Preço')
         }
 
         
