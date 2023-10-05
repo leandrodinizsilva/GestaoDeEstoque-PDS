@@ -5,7 +5,7 @@ class MaterialRepositorio{
 
     }
     index(depositoId){
-        var sql = "select * from Material where depositoId = ?"
+        var sql = "select M.nome as nome, M.preco as preco, U.nome as nomeUnidade from Material as M right join Unidade as U on M.unidadeId = U.id where depositoId = ?"
 
         return new Promise((resolve, reject) => {
             db.all(sql, [depositoId], (err, rows) => {
@@ -60,6 +60,18 @@ class MaterialRepositorio{
                 resolve(rows[0])
             });
         })
+    }
+    deleteTodosMateriaisDoDeposito(depositoId){
+        let sql = `DELETE FROM Material WHERE depositoId = ?`
+     
+        return new Promise((resolve, reject) => {
+            db.run(sql, [depositoId], function (err, result){ 
+                if(err)
+                    reject(err)
+                else
+                    resolve("")
+            })
+        }) 
     }
 }
 

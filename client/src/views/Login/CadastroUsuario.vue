@@ -81,7 +81,7 @@ import axios from 'axios';
     padding-bottom: 50px !important;
     padding-left: 50px !important;
     padding-right: 50px !important;
-    padding-top:20px !important;
+    padding-top:35px !important;
     width: 700px;
     height: fit-content;
     border: 3px solid #f1f1f1;

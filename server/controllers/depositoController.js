@@ -1,8 +1,10 @@
 import index from '../index.js'
 import DepositoRepositorio from '../repositorios/depositoRepositorio.js';
+import MaterialRepositorio from '../repositorios/materialRepositorio.js';
 import Deposito from '../entidades/deposito.js'
 
 const depositoRepositorio = new DepositoRepositorio
+const materialRepositorio = new MaterialRepositorio
 
 class DepositoController{
     constructor(){
@@ -22,7 +24,9 @@ class DepositoController{
         let id = req.body.id
         
         let promise = depositoRepositorio.delete(id)
-        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+        promise.then(function (result) { 
+            res.json(result)
+        }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     update(req, res){
         let deposito = new Deposito(req.body.id, req.body.nome, index.usuarioId())
@@ -34,7 +38,8 @@ class DepositoController{
         let id = req.body.id
 
         let promise = depositoRepositorio.carregarRegistro(id)
-        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+        promise
+        .then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
 }
 

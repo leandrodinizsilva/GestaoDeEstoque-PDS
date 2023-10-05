@@ -2,7 +2,7 @@
     <div id="wallpaper">
         <div id="loginDiv">
             <ValidationForm id="loginForm" :model="usuario" ref="validation" @save="salvar(usuario)">
-                <img src="../../assets/logo.png" alt="logo" style="width:125px; margin-bottom:15px">
+                <img src="../../assets/stocklogo.png" alt="logo" style="width:125px; margin-bottom:15px">
                 <div class="container" id="loginContainer">
                     <div class="divInput">
                         <label class="loginLabel">Login</label>
@@ -84,7 +84,7 @@ body, html {
 }
 #wallpaper{
     width: 100% !important;
-    background:url(../../assets/stockwallpaper.jpg); 
+    background:url(../../assets/wallpaper.jpg);
     height: 100%; 
 
     background-position: center;
@@ -131,7 +131,7 @@ button:hover {
     padding-bottom: 50px !important;
     padding-left: 50px !important;
     padding-right: 50px !important;
-    padding-top:20px !important;
+    padding-top:35px !important;
     height: 420px;
     width: 500px;
     border: 3px solid white;

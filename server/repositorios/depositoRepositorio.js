@@ -1,4 +1,7 @@
 import db from '../database.js'
+import MaterialRepositorio from './materialRepositorio.js';
+
+const materialRepositorio = new MaterialRepositorio
 
 class DepositoRepositorio{
     constructor(){
@@ -31,10 +34,13 @@ class DepositoRepositorio{
         let sql = `DELETE FROM deposito WHERE id = ?`
      
         return new Promise((resolve, reject) => {
-            db.all(sql, [id], function (err, result){ 
+            db.all(sql, [id], function (err){ 
                 if(err)
                     reject(err)
-                resolve("")
+                else{
+                    let promise = materialRepositorio.deleteTodosMateriaisDoDeposito(id)
+                    promise.then(function (result) { resolve(result) }).catch(function (error) { reject(error) });
+                }
             }) 
         })  
     }
@@ -45,7 +51,8 @@ class DepositoRepositorio{
             db.all(sql, [deposito.nome, deposito.id], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                else
+                    resolve("")
             }) 
         })  
     }
@@ -54,10 +61,10 @@ class DepositoRepositorio{
        
         return new Promise((resolve, reject) => {
             db.all(sql, [id], (err, rows) => {
-                if (err) {
+                if (err)
                     reject(err)
-                }
-                resolve(rows[0])
+                else
+                    resolve(rows[0])
             });
         })
     }

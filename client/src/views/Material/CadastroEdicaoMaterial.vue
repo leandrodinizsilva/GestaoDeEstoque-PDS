@@ -18,7 +18,7 @@
                             <div class="col-4" >
                                 <select v-model="material.unidadeId" class="form-control">
                                     <option value=""></option> 
-                                    <option v-for="unidade in unidades" :key="unidade.id">
+                                    <option v-for="unidade in unidades" :key="unidade.id" :value="unidade.id">
                                         {{ unidade.nome }}
                                     </option>
                                 </select>
@@ -74,6 +74,7 @@
         },
         methods: {
             salvar(material) { 
+                console.log(material)
                 if(material.id > 0){
                     axios.post('material/update', material).then(
                         this.$refs.toast.ativar('Material salvo com sucesso.', 'sucesso'),

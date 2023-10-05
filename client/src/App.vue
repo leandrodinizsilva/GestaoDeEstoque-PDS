@@ -54,13 +54,13 @@ export default {
 
 <style>
 #logout{
-  color:#EA738D;
+  color:#234E70;
   margin-right: 30px;
   cursor: pointer;
 }
 
 #logout:hover{
-  color:#FFB6C1;
+  color:#79b6c9;
 }
 .spanErro{
   color: red !important;
@@ -77,17 +77,17 @@ a{
 }
 
 .primaryColorBtn{
-  background-color:#EA738D !important;
-  border-color: #EA738D !important
+  background-color:#234E70 !important;
+  border-color: #234E70 !important
 }
 
 .secondaryColorBtn{
-  background-color:#89ABE3 !important;
-  border-color: #89ABE3 !important
+  background-color:#234E70 !important;
+  border-color: #234E70 !important
 }
 
 .secondaryColor{
-  color: #89ABE3 !important;
+  color: #234E70 !important;
 }
 
 .spanErro{
@@ -99,6 +99,6 @@ body{
 }
 
 .nav-link:hover{
-  color:#EA738D !important;
+  color:#234E70 !important;
 }
 </style>
