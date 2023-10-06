@@ -38,8 +38,7 @@ class DepositoController{
         let id = req.body.id
 
         let promise = depositoRepositorio.carregarRegistro(id)
-        promise
-        .then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
 }
 

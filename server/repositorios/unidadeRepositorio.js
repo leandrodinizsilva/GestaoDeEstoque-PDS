@@ -1,4 +1,7 @@
 import db from '../database.js'
+import MaterialRepositorio from './materialRepositorio.js';
+
+const materialRepositorio = new MaterialRepositorio
 
 class UnidadeRepositorio{
     constructor(){
@@ -27,16 +30,22 @@ class UnidadeRepositorio{
             })  
         }) 
     }
-    delete(id){
-        let sql = `DELETE FROM Unidade WHERE id = ?`
-
+    async delete(id){
+        let sql = `DELETE FROM Unidade WHERE id = ?`      
+  
+        const temMaterialComEssaUnidade = await materialRepositorio.temMaterialComEssaUnidade(id)
         return new Promise((resolve, reject) => {
-            db.run(sql, [id], function (err, result){ 
-                if(err)
-                    reject(err)
-                resolve("")
-            })
-        })   
+            if(temMaterialComEssaUnidade){
+                reject({"message": "Essa unidade esta vinculada a algum material."})
+            }
+            else{
+                db.run(sql, [id], function (err, result){ 
+                    if(err)
+                        reject(err)
+                    resolve("")
+                })
+            }
+        })     
     }
     update(unidade){
         let sql = `UPDATE Unidade SET nome = ? where id = ?`

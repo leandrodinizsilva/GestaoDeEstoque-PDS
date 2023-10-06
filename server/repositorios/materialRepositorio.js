@@ -5,7 +5,7 @@ class MaterialRepositorio{
 
     }
     index(depositoId){
-        var sql = "select M.nome as nome, M.preco as preco, U.nome as nomeUnidade from Material as M right join Unidade as U on M.unidadeId = U.id where depositoId = ?"
+        var sql = "select M.id as id, M.nome as nome, M.preco as preco, U.nome as nomeUnidade from Material as M right join Unidade as U on M.unidadeId = U.id where depositoId = ?"
 
         return new Promise((resolve, reject) => {
             db.all(sql, [depositoId], (err, rows) => {
@@ -70,6 +70,22 @@ class MaterialRepositorio{
                     reject(err)
                 else
                     resolve("")
+            })
+        }) 
+    }
+    temMaterialComEssaUnidade(unidadeId){
+        let sql = `SELECT * FROM Material WHERE unidadeId = ?`
+     
+        return new Promise((resolve, reject) => {
+            db.all(sql, [unidadeId], function (err, rows){ 
+                if(err)
+                    reject(err)
+                else{
+                    if(rows.length > 0)
+                        resolve(true)
+                    else
+                        resolve(false)
+                }             
             })
         }) 
     }

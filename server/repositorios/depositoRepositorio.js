@@ -30,16 +30,16 @@ class DepositoRepositorio{
             }) 
         })
     }
-    delete(id){
+    async delete(id){
         let sql = `DELETE FROM deposito WHERE id = ?`
-     
+        
+        await materialRepositorio.deleteTodosMateriaisDoDeposito(id)
         return new Promise((resolve, reject) => {
             db.all(sql, [id], function (err){ 
                 if(err)
                     reject(err)
                 else{
-                    let promise = materialRepositorio.deleteTodosMateriaisDoDeposito(id)
-                    promise.then(function (result) { resolve(result) }).catch(function (error) { reject(error) });
+                    resolve("")
                 }
             }) 
         })  

@@ -39,6 +39,7 @@ import axios from 'axios'
             this.$router.push({ name: 'CadastroEdicaoMaterial', params: { codigoMaterial: material.id } })
           },
           async excluir(material) { 
+            console.log(material)
             const ok = await this.$refs.modalPergunta.show({
                 title: 'Excluir Material',
                 message: 'Tem certeza que gostaria de excluir o Material?',
