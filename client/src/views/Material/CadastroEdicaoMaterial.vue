@@ -29,12 +29,13 @@
                         <div class="form-group col-10" style="display: flex; margin-top: 10px;">
                             <label class="col-2">Preço</label>
                             <div class="col-4" >
-                                <div class="input-group mb-3" style="display: flex;">
+                                <div class="input-group mb-3" style="display: flex;  margin-bottom: 0 !important;">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">R$</span>
                                     </div>
-                                    <input type="number" class="form-control" v-model="material.preco">
-                                </div>   
+                                    <input type="number" class="form-control" v-model="material.preco" step="0.01" min="0">
+                                </div> 
+                                <span name="preco" class="spanErro"></span>    
                             </div>
                         </div>
 
@@ -74,7 +75,6 @@
         },
         methods: {
             salvar(material) { 
-                console.log(material)
                 if(material.id > 0){
                     axios.post('material/update', material).then(
                         this.$refs.toast.ativar('Material salvo com sucesso.', 'sucesso'),

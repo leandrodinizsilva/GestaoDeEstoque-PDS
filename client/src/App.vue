@@ -6,17 +6,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Home" class="nav-link">Home</router-link>
+                  <router-link to="/Home" class="nav-link" v-on:click="seleciona($event)" >Home</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Deposito" class="nav-link">Depósito</router-link>
+                  <router-link to="/Deposito" class="nav-link" v-on:click="seleciona($event)">Depósito</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Unidade" class="nav-link">Unidade</router-link>
+                  <router-link to="/Unidade" class="nav-link" v-on:click="seleciona($event)">Unidade</router-link>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <router-link to="/Entrada" class="nav-link" v-on:click="seleciona($event)">Entrada</router-link>
                 </li>
             </ul>
         </div>
@@ -43,6 +48,14 @@ export default {
     logout(){
       this.$store.commit('logout')
       this.$router.push({ name: 'Login' })
+    },
+    seleciona(e){
+      var links = document.getElementsByClassName("nav-link")
+
+      Array.from(links).forEach(function (link) {
+        link.style.color = "gray"
+      });
+      e.target.style.color = "#234E70"
     }
   },
   mounted(){
@@ -75,7 +88,10 @@ export default {
 a{
   margin-left: 20px !important;
 }
-
+.nav-link{
+  color: gray;
+  opacity: 1;
+}
 .primaryColorBtn{
   background-color:#234E70 !important;
   border-color: #234E70 !important

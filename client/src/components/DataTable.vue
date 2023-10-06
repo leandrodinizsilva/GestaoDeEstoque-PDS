@@ -20,7 +20,7 @@
                     </button>
 
                 </td>
-                <td v-for="(dataField, index) in dataFields" :key="index">{{item[dataField]}}</td>
+                <td v-for="(dataField, index) in dataFields" :key="index">{{item[dataField.field]}}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -115,7 +115,7 @@
                 }
             },
             dataOp(result){
-                this.originalData = result.data
+                this.originalData = result
                 this.data = this.originalData
                 this.dataPaginado()
                 this.calculatotalPaginas()                 
@@ -126,14 +126,45 @@
             load(){
                 if(!this.paramsUrl){
                     axios.post(this.dataUrl).then( (result) => {
-                        this.dataOp(result)
+                        this.dataOp(this.formatData(result.data))
                     })
                 }
                 else{
                     axios.post(this.dataUrl, this.paramsUrl).then( (result) => {
-                        this.dataOp(result)           
+                        this.dataOp(this.formatData(result.data))        
                     })
                 } 
+            },
+            formatData(data){
+                data.forEach(element => {
+                    for(var prop in element){
+                        if (Object.prototype.hasOwnProperty.call(element, prop)) {
+                            var dataField = this.dataFields.find((dataField) => dataField.field == prop);
+                            if(dataField != null) {
+                                if(dataField.type == 'date'){
+                                    var date = new Date(element[prop])
+                                    var day = ""
+                                    var month = ""
+                                    if(date.getUTCDate() < 10)
+                                        day = '0' + date.getUTCDate()
+                                    else
+                                        day = date.getUTCDate()
+
+                                    if(date.getUTCMonth() + 1 < 10)
+                                        month = '0' + (date.getUTCMonth() + 1)
+                                    else
+                                        month = (date.getUTCMonth() + 1)
+
+                                    element[prop] = day + "/" + month + "/" + date.getUTCFullYear() 
+                                }
+                                if(dataField.format == 'r2'){
+                                    element[prop] = "R$ " + element[prop].toFixed(2)
+                                }
+                            }
+                        }
+                    }
+                })
+                return data
             },
             setShownPages(){
                 this.pages = [this.paginaAtual - 1 , this.paginaAtual, this.paginaAtual + 1]

@@ -37,6 +37,12 @@ class MaterialController{
         let promise = materialRepositorio.carregarRegistro(id)
         promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    carregarUnidadeMaterial(req, res){
+        let id = req.body.id
+
+        let promise = materialRepositorio.carregarUnidadeMaterial(id)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
 }
 
 export default MaterialController

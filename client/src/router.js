@@ -8,6 +8,8 @@ import ListaUnidadeView from './views/Unidade/ListaUnidade.vue'
 import CadastroEdicaoUnidadeView from './views/Unidade/CadastroEdicaoUnidade.vue'
 import ListaMaterialView from './views/Material/ListaMaterial.vue'
 import CadastroEdicaoMaterialView from './views/Material/CadastroEdicaoMaterial.vue'
+import ListaEntradaView from './views/Entrada/ListaEntrada.vue'
+import CadastroEdicaoEntradaView from './views/Entrada/CadastroEdicaoEntrada.vue'
 
 const routes = [
     {
@@ -54,6 +56,16 @@ const routes = [
         path: '/Material/CadastroEdicao/:codigoDeposito/:codigoMaterial',
         name: 'CadastroEdicaoMaterial',
         component: CadastroEdicaoMaterialView,
+    },
+    {
+        path: '/Entrada',
+        name: 'ListaEntrada',
+        component: ListaEntradaView,
+    },
+    {
+        path: '/Entrada/CadastroEdicao/:codigoEntrada',
+        name: 'CadastroEdicaoEntrada',
+        component: CadastroEdicaoEntradaView,
     },
     
 ]

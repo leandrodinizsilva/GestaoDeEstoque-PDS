@@ -5,12 +5,14 @@ import UsuarioController from './controllers/usuarioController.js';
 import DepositoController from './controllers/depositoController.js';
 import MaterialController from './controllers/materialController.js';
 import UnidadeController from './controllers/unidadeController.js';
+import EntradaController from './controllers/entradaController.js';
 import jwt from'jsonwebtoken'
 
 const usuarioController = new UsuarioController
 const depositoController = new DepositoController
 const materialController = new MaterialController
 const unidadeController = new UnidadeController
+const entradaController = new EntradaController
 
 const app = express()
 
@@ -58,12 +60,19 @@ app.post("/material/add", validaJWT, materialController.add);
 app.post("/material/update", validaJWT, materialController.update);
 app.post("/material/delete", validaJWT, materialController.delete);
 app.post("/material/carregarRegistro", validaJWT, materialController.carregarRegistro);
+app.post("/material/carregarUnidadeMaterial", validaJWT, materialController.carregarUnidadeMaterial);
 
 app.post("/unidade", validaJWT, unidadeController.index);
 app.post("/unidade/add", validaJWT, unidadeController.add);
 app.post("/unidade/update", validaJWT, unidadeController.update);
 app.post("/unidade/delete", validaJWT, unidadeController.delete);
 app.post("/unidade/carregarRegistro", validaJWT, unidadeController.carregarRegistro);
+
+app.post("/entrada", validaJWT, entradaController.index);
+app.post("/entrada/add", validaJWT, entradaController.add);
+app.post("/entrada/update", validaJWT, entradaController.update);
+app.post("/entrada/delete", validaJWT, entradaController.delete);
+app.post("/entrada/carregarRegistro", validaJWT, entradaController.carregarRegistro);
 
 app.use(function(req, res){
     res.status(404);

@@ -25,15 +25,16 @@ import axios from 'axios'
         data() {
             return {
                 colLabels: ['Nome', 'Preco', 'Unidade'],
-                dataFields: ['nome', 'preco', 'nomeUnidade'],
+                dataFields: [
+                  {"field": 'nome', "type": 'text'},
+                  {"field": 'preco', "type": 'number', "format": "r2"},
+                  {"field": 'nomeUnidade', "type": 'text'},
+                ],
             }
         },
         methods: {
           inserir(){
             this.$router.push({ name: 'CadastroEdicaoMaterial', params: { codigodeDeposito: this.$route.params.codigodeDeposito ,codigoMaterial: 0 } })
-          },
-          material(material){
-            this.$router.push({ name: 'ListaMaterial', params: { codigodeDeposito: this.$route.params.codigodeDeposito, codigoMaterial: material.id } })
           },
           editar(material){
             this.$router.push({ name: 'CadastroEdicaoMaterial', params: { codigoMaterial: material.id } })

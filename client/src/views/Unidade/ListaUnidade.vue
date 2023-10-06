@@ -25,7 +25,9 @@ import axios from 'axios'
         data() {
             return {
                 colLabels: ['Nome'],
-                dataFields: ['nome'],
+                dataFields: [
+                  {"field": 'nome', "type": 'text'}
+                ],
             }
         },
         methods: {

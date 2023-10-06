@@ -40,6 +40,18 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             senha text,
             nome text
         )`); 
+
+        db.run(`CREATE TABLE IF NOT EXISTS Entrada (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            materialId INTEGER,
+            depositoId INTEGER,
+            usuarioId INTEGER,
+            quantidade float,
+            data datetime,
+            FOREIGN KEY (materialId) REFERENCES Material(id),
+            FOREIGN KEY (depositoId) REFERENCES Deposito(id),
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)
+        )`);
     }
 });
 
