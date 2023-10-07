@@ -1,23 +1,11 @@
 import db from '../database.js'
 
-class EntradaRepositorio{
+class SaidaRepositorio{
     constructor(){
 
     }
-    carregarEntradas(usuarioId){
-        var sql = "SELECT * FROM Entrada where usuarioId = ? "
-    
-        return new Promise((resolve, reject) => {
-            db.all(sql, [usuarioId], (err, rows) => {
-                if (err) {
-                    reject(err)
-                }
-                 resolve(rows)
-           });
-        })
-    }
     index(usuarioId){
-        var sql = "select E.id as id, E.data as data, E.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito from Entrada as E right join Material as M on M.id = E.materialId right join Deposito as D on D.id = E.depositoId where E.usuarioId = ? "
+        var sql = "select E.id as id, E.data as data, E.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito from saida as E right join Material as M on M.id = E.materialId right join Deposito as D on D.id = E.depositoId where E.usuarioId = ? "
     
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {
@@ -28,11 +16,11 @@ class EntradaRepositorio{
            });
         })
     }
-    add(entrada){
-        let sql = `INSERT INTO entrada (materialId, depositoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?)`
+    add(saida){
+        let sql = `INSERT INTO saida (materialId, depositoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?)`
 
         return new Promise((resolve, reject) => {
-            db.all(sql, [entrada.materialId, entrada.depositoId, entrada.quantidade, entrada.data, entrada.usuarioId], function (err, result){ 
+            db.all(sql, [saida.materialId, saida.depositoId, saida.quantidade, saida.data, saida.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve("")
@@ -40,7 +28,7 @@ class EntradaRepositorio{
         })
     }
     delete(id){
-        let sql = `DELETE FROM entrada WHERE id = ?`
+        let sql = `DELETE FROM saida WHERE id = ?`
         
         return new Promise((resolve, reject) => {
             db.all(sql, [id], function (err){ 
@@ -52,11 +40,11 @@ class EntradaRepositorio{
             }) 
         })  
     }
-    update(entrada){
-        let sql = `UPDATE entrada SET materialId = ?, depositoId = ?, quantidade = ?, data = ? where id = ?`
+    update(saida){
+        let sql = `UPDATE saida SET materialId = ?, depositoId = ?, quantidade = ?, data = ? where id = ?`
 
         return new Promise((resolve, reject) => {
-            db.all(sql, [entrada.materialId, entrada.depositoId, entrada.quantidade, entrada.data, entrada.id], function (err, result){ 
+            db.all(sql, [saida.materialId, saida.depositoId, saida.quantidade, saida.data, saida.id], function (err, result){ 
                 if(err)
                     reject(err)
                 else
@@ -65,7 +53,7 @@ class EntradaRepositorio{
         })  
     }
     carregarRegistro(id){
-        let sql = `SELECT * FROM entrada WHERE id = ?`
+        let sql = `SELECT * FROM saida WHERE id = ?`
        
         return new Promise((resolve, reject) => {
             db.all(sql, [id], (err, rows) => {
@@ -76,8 +64,8 @@ class EntradaRepositorio{
             });
         })
     }
-    deleteTodasEntradasDoMaterial(materialId){
-        let sql = `DELETE FROM entrada WHERE materialId = ?`
+    deleteTodasSaidasDoMaterial(materialId){
+        let sql = `DELETE FROM saida WHERE materialId = ?`
         
         return new Promise((resolve, reject) => {
             db.all(sql, [materialId], function (err){ 
@@ -87,8 +75,8 @@ class EntradaRepositorio{
                     resolve("")
                 }
             }) 
-        })  
+        }) 
     }
 }
 
-export default EntradaRepositorio
+export default SaidaRepositorio

@@ -1,4 +1,9 @@
 import db from '../database.js'
+import EntradaRepositorio from './entradaRepositorio.js';
+import SaidaRepositorio from './saidaRepositorio.js';
+
+const entradaRepositorio = new EntradaRepositorio
+const saidaRepositorio = new SaidaRepositorio
 
 class MaterialRepositorio{
     constructor(){
@@ -27,9 +32,12 @@ class MaterialRepositorio{
             })  
         })
     }
-    delete(id){
+    async delete(id){
         let sql = `DELETE FROM Material WHERE id = ?`
-     
+        
+        await entradaRepositorio.deleteTodasEntradasDoMaterial(id)
+        await saidaRepositorio.deleteTodasSaidasDoMaterial(id)
+        
         return new Promise((resolve, reject) => {
             db.run(sql, [id], function (err, result){ 
                 if(err)

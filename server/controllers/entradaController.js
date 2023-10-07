@@ -5,9 +5,14 @@ import Entrada from '../entidades/entrada.js'
 const entradaRepositorio = new EntradaRepositorio
 
 
-class entradaController{
+class EntradaController{
     constructor(){
 
+    
+    }
+    carregarEntradas(req, res){
+        let promise = entradaRepositorio.carregarEntradas(index.usuarioId())
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     index(req, res){
         let promise = entradaRepositorio.index(index.usuarioId())
@@ -41,4 +46,4 @@ class entradaController{
     }
 }
 
-export default entradaController
+export default EntradaController

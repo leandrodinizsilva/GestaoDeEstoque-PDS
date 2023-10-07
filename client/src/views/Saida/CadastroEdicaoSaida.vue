@@ -1,15 +1,15 @@
 ﻿<template>
     <div align="center" id="content">
-        <h3 class="secondaryColor">Cadastro de Entrada</h3>
+        <h3 class="secondaryColor">Cadastro de Sáida</h3>
         <div align="center">
             <div class="card" style="width:75vw;">
                 <div class="card-body" style="padding-top:35px; padding-bottom:30px;">
-                    <ValidationForm :model="entrada" ref="validation" @save="salvar(entrada)">
+                    <ValidationForm :model="saida" ref="validation" @save="salvar(saida)">
 
                         <div class="form-group col-10" style="display: flex;">
                             <label class="col-2">Data</label>
                             <div class="col-4" >
-                                <input v-model="entrada.data" id="nome" class="form-control" type="date"> 
+                                <input v-model="saida.data" id="nome" class="form-control" type="date"> 
                                 <span name="data" class="spanErro"></span>     
                             </div>
                         </div>
@@ -17,7 +17,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Depósito</label>
                             <div class="col-4" >
-                                <select v-model="entrada.depositoId" class="form-control" v-on:change="carregarMateriais()">
+                                <select v-model="saida.depositoId" class="form-control" v-on:change="carregarMateriais()">
                                     <option value=""></option> 
                                     <option v-for="deposito in depositos" :key="deposito.id" :value="deposito.id">
                                         {{ deposito.nome }}
@@ -30,7 +30,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Material</label>
                             <div class="col-4" >
-                                <select v-model="entrada.materialId" class="form-control" v-on:change="carregarUnidade()">
+                                <select v-model="saida.materialId" class="form-control" v-on:change="carregarUnidade()">
                                     <option value=""></option> 
                                     <option v-for="material in materiais" :key="material.id" :value="material.id">
                                         {{ material.nome }}
@@ -47,14 +47,14 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">{{ unidadeMaterial }}</span>
                                     </div>
-                                    <input type="number" class="form-control" v-model="entrada.quantidade" min="0">
+                                    <input type="number" class="form-control" v-model="saida.quantidade" min="0">
                                 </div> 
                                 <span name="quantidade" class="spanErro"></span>    
                             </div>
                         </div>
 
                         <div id="actionButtons" style="margin-top:50px">
-                            <button v-if="entrada.id > 0" @click="excluir(entrada)" type="button" style="margin-right: 5px;" class="btn btn-secondary secondaryColorBtn">Excluir</button>
+                            <button v-if="saida.id > 0" @click="excluir(saida)" type="button" style="margin-right: 5px;" class="btn btn-secondary secondaryColorBtn">Excluir</button>
                             <button type="submit" class="btn btn-success primaryColorBtn">Salvar</button>
                             <ModalPergunta ref="modalPergunta"></ModalPergunta>
                         </div>
@@ -73,12 +73,12 @@
   import ToastComponent from '@/components/ToastComponent.vue'
 
   export default {
-        name: 'CadastroEdicaoEntradaView',
+        name: 'CadastroEdicaoSaidaView',
         components: { ModalPergunta, ValidationForm, ToastComponent },
         data() {
             return {
-                entrada: {
-                    id: this.$route.params.codigoEntrada,
+                saida: {
+                    id: this.$route.params.codigoSaida,
                     depositoId: null,
                     materialId: null,
                     quantidade: null,
@@ -90,42 +90,42 @@
             }
         },
         methods: {
-            salvar(entrada) { 
-                if(entrada.id > 0){
-                    axios.post('entrada/update', entrada).then(
-                        this.$refs.toast.ativar('Entrada salva com sucesso.', 'sucesso'),
+            salvar(saida) { 
+                if(saida.id > 0){
+                    axios.post('saida/update', saida).then(
+                        this.$refs.toast.ativar('Saída salva com sucesso.', 'sucesso'),
                         this.$router.back()
                     )
                 }
                 else{
-                    axios.post('entrada/add', entrada).then(
-                        this.$refs.toast.ativar('Entrada salva com sucesso.', 'sucesso'),
+                    axios.post('saida/add', saida).then(
+                        this.$refs.toast.ativar('Saída salva com sucesso.', 'sucesso'),
                         this.$router.back()                 
                     )
                 }      
             },           
-            async excluir(entrada) { 
+            async excluir(saida) { 
                 const ok = await this.$refs.modalPergunta.show({
-                    title: 'Excluir Entrada',
-                    message: 'Tem certeza que gostaria de excluir a entrada?',
+                    title: 'Excluir Saída',
+                    message: 'Tem certeza que gostaria de excluir a saída?',
                     okButton: 'Sim',
                 })
 
                 if (ok) {
-                    axios.post('entrada/delete', {id: entrada.id}).then(() => { 
-                        this.$refs.toast.ativar('Entrada excluída com sucesso.', 'sucesso'),
+                    axios.post('saida/delete', {id: saida.id}).then(() => { 
+                        this.$refs.toast.ativar('Saída excluída com sucesso.', 'sucesso'),
                         this.$router.back()
                     })
                 }
             },
             recuperarDados() { 
-                axios.post('entrada/carregarRegistro', {id: this.entrada.id}).then( (result) => {
-                        this.entrada.data = result.data.data 
-                        this.entrada.depositoId = result.data.depositoId
+                axios.post('saida/carregarRegistro', {id: this.saida.id}).then( (result) => {
+                        this.saida.data = result.data.data 
+                        this.saida.depositoId = result.data.depositoId
                         this.carregarMateriais()
-                        this.entrada.materialId = result.data.materialId   
-                        this.carregarUnidade()
-                        this.entrada.quantidade = result.data.quantidade            
+                        this.saida.materialId = result.data.materialId 
+                        this.carregarUnidade()  
+                        this.saida.quantidade = result.data.quantidade            
                    }
                 )
             },
@@ -136,14 +136,14 @@
                 )
             },
             carregarMateriais() {
-                axios.post('material', { "depositoId": this.entrada.depositoId }).then( (result) => {
+                axios.post('material', { "depositoId": this.saida.depositoId }).then( (result) => {
                     this.materiais = result.data           
                    }
                 )
             },
             carregarUnidade() {
-                if(this.entrada.materialId > 0){
-                    axios.post('material/carregarUnidadeMaterial', { "id": this.entrada.materialId }).then( (result) => {
+                if(this.saida.materialId > 0){
+                    axios.post('material/carregarUnidadeMaterial', { "id": this.saida.materialId }).then( (result) => {
                         this.unidadeMaterial = result.data.unidade         
                     })  
                 }
@@ -154,7 +154,7 @@
             }
         },
         mounted(){
-            if(this.entrada.id > 0)
+            if(this.saida.id > 0)
                 this.recuperarDados()
 
             this.carregarDepositos()

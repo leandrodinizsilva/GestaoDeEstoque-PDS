@@ -6,6 +6,7 @@ import DepositoController from './controllers/depositoController.js';
 import MaterialController from './controllers/materialController.js';
 import UnidadeController from './controllers/unidadeController.js';
 import EntradaController from './controllers/entradaController.js';
+import SaidaController from './controllers/saidaController.js';
 import jwt from'jsonwebtoken'
 
 const usuarioController = new UsuarioController
@@ -13,6 +14,7 @@ const depositoController = new DepositoController
 const materialController = new MaterialController
 const unidadeController = new UnidadeController
 const entradaController = new EntradaController
+const saidaController = new SaidaController
 
 const app = express()
 
@@ -69,10 +71,17 @@ app.post("/unidade/delete", validaJWT, unidadeController.delete);
 app.post("/unidade/carregarRegistro", validaJWT, unidadeController.carregarRegistro);
 
 app.post("/entrada", validaJWT, entradaController.index);
+app.post("/entrada/carregarEntradas", validaJWT, entradaController.carregarEntradas);
 app.post("/entrada/add", validaJWT, entradaController.add);
 app.post("/entrada/update", validaJWT, entradaController.update);
 app.post("/entrada/delete", validaJWT, entradaController.delete);
 app.post("/entrada/carregarRegistro", validaJWT, entradaController.carregarRegistro);
+
+app.post("/saida", validaJWT, saidaController.index);
+app.post("/saida/add", validaJWT, saidaController.add);
+app.post("/saida/update", validaJWT, saidaController.update);
+app.post("/saida/delete", validaJWT, saidaController.delete);
+app.post("/saida/carregarRegistro", validaJWT, saidaController.carregarRegistro);
 
 app.use(function(req, res){
     res.status(404);
