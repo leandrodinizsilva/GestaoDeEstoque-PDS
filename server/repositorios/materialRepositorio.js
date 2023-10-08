@@ -37,7 +37,7 @@ class MaterialRepositorio{
         
         await entradaRepositorio.deleteTodasEntradasDoMaterial(id)
         await saidaRepositorio.deleteTodasSaidasDoMaterial(id)
-        
+
         return new Promise((resolve, reject) => {
             db.run(sql, [id], function (err, result){ 
                 if(err)
@@ -96,6 +96,17 @@ class MaterialRepositorio{
                 }             
             })
         }) 
+    }
+    carregarUnidadeMaterial(id){
+        let sql = "select U.nome as unidade from Material as M right join Unidade as U on M.unidadeId = U.id where M.id = ?"
+
+        return new Promise((resolve, reject) => {
+            db.all(sql, [id], function (err, rows){ 
+                if(err)
+                    reject(err)
+                resolve(rows[0])
+            })  
+        })
     }
     carregarUnidadeMaterial(id){
         let sql = "select U.nome as unidade from Material as M right join Unidade as U on M.unidadeId = U.id where M.id = ?"

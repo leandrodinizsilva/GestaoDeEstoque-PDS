@@ -16,10 +16,16 @@ class SaidaRepositorio{
            });
         })
     }
-    add(saida){
+    async add(saida){
         let sql = `INSERT INTO saida (materialId, depositoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?)`
 
+        var quantidadeDisponivel =  await this.carregarQuantidadeDisponivelMaterial(saida.materialId)
+        
         return new Promise((resolve, reject) => {
+            if(saida.quantidade > quantidadeDisponivel){
+                reject({"message": "Quantidade de saida é superior ao montante de entrada."})
+                return
+            }
             db.all(sql, [saida.materialId, saida.depositoId, saida.quantidade, saida.data, saida.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
@@ -76,6 +82,29 @@ class SaidaRepositorio{
                 }
             }) 
         }) 
+    }
+    async carregarQuantidadeDisponivelMaterial(materialId){
+        let sql = "select SUM(quantidade) as quantidade from Entrada where materialId = ?"
+        let sql2 = "select SUM(quantidade) as quantidade from Saida where materialId = ?"
+
+        var quantidadeEntrada = await new Promise((resolve, reject) => {
+            db.all(sql, [materialId], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve(result[0].quantidade)
+            })  
+        })
+        
+        var quantidadeSaida = await new Promise((resolve, reject) => {
+            db.all(sql2, [materialId], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve(result[0].quantidade)
+            })  
+        })
+
+        return quantidadeEntrada - quantidadeSaida;
+
     }
 }
 

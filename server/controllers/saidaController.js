@@ -13,11 +13,11 @@ class SaidaController{
         let promise = saidaRepositorio.index(index.usuarioId())
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
-    add(req, res){
+    async add(req, res){
         let saida = new Saida(null, req.body.materialId, req.body.depositoId, req.body.quantidade, req.body.data, index.usuarioId()) 
 
         let promise = saidaRepositorio.add(saida)
-        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+        await promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     delete(req, res){
         let id = req.body.id
