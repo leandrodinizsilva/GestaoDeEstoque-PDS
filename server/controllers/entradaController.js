@@ -28,9 +28,7 @@ class EntradaController{
         let id = req.body.id
         
         let promise = entradaRepositorio.delete(id)
-        promise.then(function (result) { 
-            res.json(result)
-        }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     update(req, res){
         let entrada = new Entrada(req.body.id, req.body.materialId, req.body.depositoId, req.body.quantidade, req.body.data, index.usuarioId())

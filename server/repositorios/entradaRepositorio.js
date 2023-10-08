@@ -39,10 +39,21 @@ class EntradaRepositorio{
             }) 
         })
     }
-    delete(id){
+    async delete(id){
         let sql = `DELETE FROM entrada WHERE id = ?`
         
+        let entrada = await this.carregarRegistro(id)
+        var quantidadeSaida = await this.carregarQuantidadeSaidaDoMaterial(entrada.materialId)
+        var quantidadeEntrada = await this.carregarQuantidadeEntradaDoMaterial(entrada.materialId)
+        quantidadeEntrada = quantidadeEntrada - entrada.quantidade
+
+
+        	
         return new Promise((resolve, reject) => {
+            if(quantidadeEntrada < quantidadeSaida){
+                reject({"message": "Quantidade de saida é superior ao montante de entrada."})
+                return
+            }
             db.all(sql, [id], function (err){ 
                 if(err)
                     reject(err)
@@ -85,6 +96,32 @@ class EntradaRepositorio{
                     reject(err)
                 else{
                     resolve("")
+                }
+            }) 
+        })  
+    }
+    carregarQuantidadeSaidaDoMaterial(materialId){
+        let sql = `SELECT SUM(quantidade) as quantidade from saida where materialId = ?`
+        
+        return new Promise((resolve, reject) => {
+            db.all(sql, [materialId], function (err, result){ 
+                if(err)
+                    reject(err)
+                else{
+                    resolve(result[0].quantidade)
+                }
+            }) 
+        })  
+    }
+    carregarQuantidadeEntradaDoMaterial(materialId){
+        let sql = `SELECT SUM(quantidade) as quantidade from Entrada where materialId = ?`
+        
+        return new Promise((resolve, reject) => {
+            db.all(sql, [materialId], function (err, result){ 
+                if(err)
+                    reject(err)
+                else{
+                    resolve(result[0].quantidade)
                 }
             }) 
         })  

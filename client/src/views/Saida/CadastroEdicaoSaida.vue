@@ -92,14 +92,14 @@
         methods: {
             salvar(saida) { 
                 if(saida.id > 0){
-                    axios.post('saida/update', saida).then((data) => {
+                    axios.post('saida/update', saida).then(() => {
                             this.$refs.toast.ativar('Saída salva com sucesso.', 'sucesso'),
                             this.$router.back()
                         }
                     )
                 }
                 else{
-                    axios.post('saida/add', saida).then((data)=>{
+                    axios.post('saida/add', saida).then(()=>{
                             this.$refs.toast.ativar('Saída salva com sucesso.', 'sucesso'),
                             this.$router.back()    
                         }             
