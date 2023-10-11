@@ -124,7 +124,6 @@
                 axios.post('saida/carregarRegistro', {id: this.saida.id}).then( (result) => {
                         this.saida.data = result.data.data 
                         this.saida.depositoId = result.data.depositoId
-                        this.carregarMateriais()
                         this.saida.materialId = result.data.materialId 
                         this.carregarUnidade()  
                         this.saida.quantidade = result.data.quantidade            
@@ -138,7 +137,7 @@
                 )
             },
             carregarMateriais() {
-                axios.post('material', { "depositoId": this.saida.depositoId }).then( (result) => {
+                axios.post('material').then( (result) => {
                     this.materiais = result.data           
                    }
                 )
@@ -160,6 +159,7 @@
                 this.recuperarDados()
 
             this.carregarDepositos()
+            this.carregarMateriais()
             this.$refs.validation.required('data','Data')
             this.$refs.validation.required('depositoId','Depósito')
             this.$refs.validation.required('materialId','Material')
