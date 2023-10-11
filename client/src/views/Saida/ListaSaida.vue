@@ -23,12 +23,13 @@ import axios from 'axios'
         components: { DataTable, ModalPergunta, ToastComponent },
         data() {
             return {
-                colLabels: ['Data', 'Depósito', 'Material', 'Quantidade'],
+                colLabels: ['Data', 'Depósito', 'Material', 'Quantidade', 'Unidade'],
                 dataFields: [
                   {"field": 'data', "type": 'date'},
                   {"field": 'nomeDeposito', "type": 'text'},
                   {"field": 'nomeMaterial', "type": 'text'},
-                  {"field": 'quantidade', "type": 'number'}
+                  {"field": 'quantidade', "type": 'number'},
+                  {"field": 'nomeUnidade', "type": 'text'}
                 ],
             }
         },

@@ -17,7 +17,7 @@ class EntradaRepositorio{
         })
     }
     index(usuarioId){
-        var sql = "select E.id as id, E.data as data, E.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito from Entrada as E right join Material as M on M.id = E.materialId right join Deposito as D on D.id = E.depositoId where E.usuarioId = ? "
+        var sql = "select E.id as id, E.data as data, E.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito, U.nome as nomeUnidade from Entrada as E right join Material as M on M.id = E.materialId right join Deposito as D on D.id = E.depositoId right join Unidade as U on M.unidadeId = U.id where E.usuarioId = ? ORDER BY E.data DESC "
     
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {

@@ -5,7 +5,7 @@ class SaidaRepositorio{
 
     }
     index(usuarioId){
-        var sql = "select E.id as id, E.data as data, E.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito from saida as E right join Material as M on M.id = E.materialId right join Deposito as D on D.id = E.depositoId where E.usuarioId = ? "
+        var sql = "select S.id as id, S.data as data, S.quantidade as quantidade, M.nome as nomeMaterial, D.nome as nomeDeposito, U.nome as nomeUnidade from saida as S right join Material as M on M.id = S.materialId right join Deposito as D on D.id = S.depositoId right join Unidade as U on M.unidadeId = U.id where S.usuarioId = ? ORDER BY S.data DESC "
     
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {
