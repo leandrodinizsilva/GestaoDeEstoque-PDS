@@ -3,7 +3,7 @@
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Depósitos</h3>
     <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Depósito <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
-        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" :showAddButton="true" @editar="editar" @excluir="excluir" @addItem="material" :id="'id'" ></DataTable>
+        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" @editar="editar" @excluir="excluir" :id="'id'" ></DataTable>
     </div>
 
     <ModalPergunta ref="modalPergunta"></ModalPergunta>
@@ -33,9 +33,6 @@ import axios from 'axios'
         methods: {
           inserir(){
             this.$router.push({ name: 'CadastroEdicaoDeposito', params: { codigoDeposito: 0 } })
-          },
-          material(depositoId){
-            this.$router.push({ name: 'ListaMaterial', params: { codigoDeposito: depositoId } })
           },
           editar(deposito){
             this.$router.push({ name: 'CadastroEdicaoDeposito', params: { codigoDeposito: deposito.id } })

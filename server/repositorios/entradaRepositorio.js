@@ -46,9 +46,7 @@ class EntradaRepositorio{
         var quantidadeSaida = await this.carregarQuantidadeSaidaDoMaterial(entrada.materialId)
         var quantidadeEntrada = await this.carregarQuantidadeEntradaDoMaterial(entrada.materialId)
         quantidadeEntrada = quantidadeEntrada - entrada.quantidade
-
-
-        	
+	
         return new Promise((resolve, reject) => {
             if(quantidadeEntrada < quantidadeSaida){
                 reject({"message": "Quantidade de saida é superior ao montante de entrada."})

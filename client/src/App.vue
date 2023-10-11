@@ -21,6 +21,11 @@
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
+                  <router-link to="/Material" class="nav-link" v-on:click="seleciona($event)">Material</router-link>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
                   <router-link to="/Entrada" class="nav-link" v-on:click="seleciona($event)">Entrada</router-link>
                 </li>
             </ul>

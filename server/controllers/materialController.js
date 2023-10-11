@@ -14,7 +14,7 @@ class MaterialController{
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     add(req, res){
-        let material = new Material(null, req.body.nome, req.body.unidadeId, req.body.preco, req.body.depositoId)
+        let material = new Material(null, req.body.nome, req.body.unidadeId, req.body.preco)
 
         let promise = materialRepositorio.add(material)
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
@@ -26,7 +26,7 @@ class MaterialController{
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     update(req, res){
-        let material = new Material(req.body.id, req.body.nome, req.body.unidadeId, req.body.preco, req.body.depositoId)
+        let material = new Material(req.body.id, req.body.nome, req.body.unidadeId, req.body.preco)
 
         let promise = materialRepositorio.update(material)
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });

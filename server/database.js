@@ -22,8 +22,6 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             nome text,
             unidadeId INTEGER,
             preco float,
-            depositoId INTEGER,
-            FOREIGN KEY (depositoId) REFERENCES Deposito(id),
             FOREIGN KEY (unidadeId) REFERENCES Unidade(id)    
         )`);
         

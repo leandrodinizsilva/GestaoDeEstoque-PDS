@@ -50,12 +50,12 @@ const routes = [
         component: CadastroEdicaoUnidadeView,
     },
     {
-        path: '/Material/:codigoDeposito',
+        path: '/Material',
         name: 'ListaMaterial',
         component: ListaMaterialView,
     },
     {
-        path: '/Material/CadastroEdicao/:codigoDeposito/:codigoMaterial',
+        path: '/Material/CadastroEdicao/:codigoMaterial',
         name: 'CadastroEdicaoMaterial',
         component: CadastroEdicaoMaterialView,
     },

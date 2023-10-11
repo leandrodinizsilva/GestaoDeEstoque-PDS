@@ -68,7 +68,6 @@
                     nome: null,
                     unidadeId: null,
                     preco: null,
-                    depositoId: this.$route.params.codigoDeposito
                 },
                 unidades: null
             }
