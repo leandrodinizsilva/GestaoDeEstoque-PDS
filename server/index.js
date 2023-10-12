@@ -7,6 +7,7 @@ import MaterialController from './controllers/materialController.js';
 import UnidadeController from './controllers/unidadeController.js';
 import EntradaController from './controllers/entradaController.js';
 import SaidaController from './controllers/saidaController.js';
+import TransferenciaController from './controllers/transferenciaController.js';
 import jwt from'jsonwebtoken'
 
 const usuarioController = new UsuarioController
@@ -15,6 +16,7 @@ const materialController = new MaterialController
 const unidadeController = new UnidadeController
 const entradaController = new EntradaController
 const saidaController = new SaidaController
+const transferenciaController = new TransferenciaController
 
 const app = express()
 
@@ -82,6 +84,13 @@ app.post("/saida/add", validaJWT, saidaController.add);
 app.post("/saida/update", validaJWT, saidaController.update);
 app.post("/saida/delete", validaJWT, saidaController.delete);
 app.post("/saida/carregarRegistro", validaJWT, saidaController.carregarRegistro);
+
+app.post("/transferencia", validaJWT, transferenciaController.index);
+app.post("/transferencia/add", validaJWT, transferenciaController.add);
+app.post("/transferencia/update", validaJWT, transferenciaController.update);
+app.post("/transferencia/delete", validaJWT, transferenciaController.delete);
+app.post("/transferencia/carregarRegistro", validaJWT, transferenciaController.carregarRegistro);
+app.post("/transferencia/carregarDepositosDestino", validaJWT, transferenciaController.carregarDepositosDestino);
 
 app.use(function(req, res){
     res.status(404);

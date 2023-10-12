@@ -17,7 +17,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Depósito</label>
                             <div class="col-4" >
-                                <select v-model="saida.depositoId" class="form-control" v-on:change="carregarMateriais()">
+                                <select v-model="saida.depositoId" class="form-control">
                                     <option value=""></option> 
                                     <option v-for="deposito in depositos" :key="deposito.id" :value="deposito.id">
                                         {{ deposito.nome }}

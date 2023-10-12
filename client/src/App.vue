@@ -34,6 +34,11 @@
                   <router-link to="/Saida" class="nav-link" v-on:click="seleciona($event)">Saída</router-link>
                 </li>
             </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <router-link to="/Transferencia" class="nav-link" v-on:click="seleciona($event)">Transferência</router-link>
+                </li>
+            </ul>
         </div>
         <a style="color:gray;">Bem vindo</a>
         <a style="color:gray; font-weight: 600;">{{getNomeUsuarioLogado}}</a>

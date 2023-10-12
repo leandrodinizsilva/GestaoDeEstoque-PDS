@@ -12,6 +12,8 @@ import ListaEntradaView from './views/Entrada/ListaEntrada.vue'
 import CadastroEdicaoEntradaView from './views/Entrada/CadastroEdicaoEntrada.vue'
 import ListaSaidaView from './views/Saida/ListaSaida.vue'
 import CadastroEdicaoSaidaView from './views/Saida/CadastroEdicaoSaida.vue'
+import ListaTransferenciaView from './views/Transferencia/ListaTransferencia.vue'
+import CadastroEdicaoTransferenciaView from './views/Transferencia/CadastroEdicaoTransferencia.vue'
 
 const routes = [
     {
@@ -78,6 +80,16 @@ const routes = [
         path: '/Saida/CadastroEdicao/:codigoSaida',
         name: 'CadastroEdicaoSaida',
         component: CadastroEdicaoSaidaView,
+    },
+    {
+        path: '/Transferencia',
+        name: 'ListaTransferencia',
+        component: ListaTransferenciaView,
+    },
+    {
+        path: '/Transferencia/CadastroEdicao/:codigoTransferencia',
+        name: 'CadastroEdicaoTransferencia',
+        component: CadastroEdicaoTransferenciaView,
     },
     
 ]
