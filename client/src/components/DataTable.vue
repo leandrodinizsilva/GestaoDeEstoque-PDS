@@ -2,13 +2,13 @@
     <table class="table" style="margin-top:20px;">
         <thead>
             <tr>
-                <th style="width:20%" v-if="showEditButton || showRemoveButton || showAddButton"></th>
+                <th style="width:20%" v-if="showEditButton || showRemoveButton || showAddButton || showStock"></th>
                 <th v-for="(value, index) in colLabels" :key="index" class="secondaryColor" scope="col">{{value}}</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in data" :key="index">
-                <td v-if="showEditButton || showRemoveButton ||  showAddButton" align="center">
+                <td v-if="showEditButton || showRemoveButton ||  showAddButton || showStock" align="center">
                     <button title="Editar" style="margin-left:10px;"  v-if="showEditButton" type="button" @click="$emit('editar', item )" class="btn btn-primary primaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-pen" />
                     </button>
@@ -17,6 +17,9 @@
                     </button>
                     <button title="Excluir"  v-if="showRemoveButton" style="margin-left:10px;" type="button" @click="$emit('excluir', item )" class="btn btn-secondary secondaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-trash" />
+                    </button>
+                    <button title="Exibir Estoque"  v-if="showStock" style="margin-left:10px;" type="button" @click="$emit('exibirEstoque', item )" class="btn btn-secondary secondaryColorBtn">
+                        <font-awesome-icon icon="fa-solid fa-warehouse" />
                     </button>
 
                 </td>
@@ -57,6 +60,7 @@
             showEditButton: null,
             showRemoveButton: null,
             showAddButton: null,
+            showStock: null,
             dataUrl: null,
             paramsUrl: null,
             id: null,
@@ -124,6 +128,7 @@
                     this.setPage(this.$store.state.paginaAtual-1) 
             },
             load(){
+                console.log(this.paramsUrl);
                 if(!this.paramsUrl){
                     axios.post(this.dataUrl).then( (result) => {
                         this.dataOp(this.formatData(result.data))

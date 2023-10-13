@@ -14,6 +14,11 @@ class DepositoController{
         let promise = depositoRepositorio.index(index.usuarioId())
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    listarMaterialDoEstoque(req, res){
+        let id = req.body.codigoDeposito
+        let promise = depositoRepositorio.listarMaterialDoEstoque(id)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
     add(req, res){
         let deposito = new Deposito(null, req.body.nome, index.usuarioId()) 
 

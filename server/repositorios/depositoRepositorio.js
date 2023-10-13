@@ -19,6 +19,24 @@ class DepositoRepositorio{
            });
         })
     }
+    listarMaterialDoEstoque(depositoId){
+        var sqlSaidas = "SELECT SUM(s.quantidade) FROM Saida WHERE e.depositoId = ? GROUP BY s.materialId";
+        var sql = "SELECT e.materialId, m.nome, u.nome AS nomeUnidade, "
+                + "(SUM(e.quantidade) - COALESCE(SUM(s.quantidade), 0)) AS quantidade FROM Entrada AS e "
+                + "LEFT JOIN Material AS m ON e.materialId = m.id "
+                + "LEFT JOIN Saida AS s ON s.materialId = e.materialId "
+                + "LEFT JOIN Unidade AS u ON m.unidadeId = u.id "
+                + "WHERE e.depositoId = ? GROUP BY e.materialId";
+
+        return new Promise((resolve, reject) => {
+            db.all(sql, [depositoId], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows)
+           });
+        })
+    }
     add(deposito){
         let sql = `INSERT INTO deposito (nome, usuarioId) VALUES (?,?)`
 

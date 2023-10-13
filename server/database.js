@@ -14,7 +14,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome text,
             usuarioId INTEGER,
-            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)  
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS Material (
@@ -22,9 +22,9 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             nome text,
             unidadeId INTEGER,
             preco float,
-            FOREIGN KEY (unidadeId) REFERENCES Unidade(id)    
+            FOREIGN KEY (unidadeId) REFERENCES Unidade(id)
         )`);
-        
+
         db.run(`CREATE TABLE IF NOT EXISTS Deposito (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome text,
@@ -37,7 +37,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             login text UNIQUE,
             senha text,
             nome text
-        )`); 
+        )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS Entrada (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

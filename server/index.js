@@ -56,6 +56,7 @@ app.post("/deposito/add", validaJWT, depositoController.add);
 app.post("/deposito/update", validaJWT, depositoController.update);
 app.post("/deposito/delete", validaJWT, depositoController.delete);
 app.post("/deposito/carregarRegistro", validaJWT, depositoController.carregarRegistro);
+app.post("/deposito/listaDepositoEstoque", validaJWT, depositoController.listarMaterialDoEstoque);
 
 app.post("/material", validaJWT, materialController.index);
 app.post("/material/add", validaJWT, materialController.add);

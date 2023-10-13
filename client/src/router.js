@@ -3,6 +3,7 @@ import LoginView from './views/Login/Login.vue'
 import HomeView from './views/Home.vue'
 import CadastroUsuarioView from './views/Login/CadastroUsuario.vue'
 import ListaDepositoView from './views/Deposito/ListaDeposito.vue'
+import ListaDepositoEstoqueView from './views/Deposito/ListaDepositoEstoque.vue'
 import CadastroEdicaoDepositoView from './views/Deposito/CadastroEdicaoDeposito.vue'
 import ListaUnidadeView from './views/Unidade/ListaUnidade.vue'
 import CadastroEdicaoUnidadeView from './views/Unidade/CadastroEdicaoUnidade.vue'
@@ -33,6 +34,11 @@ const routes = [
         path: '/Deposito',
         name: 'ListaDeposito',
         component: ListaDepositoView,
+    },
+    {
+        path: '/Deposito/Estoque/:codigoDeposito',
+        name: 'ListaDepositoEstoque',
+        component: ListaDepositoEstoqueView,
     },
     {
         path: '/Deposito/CadastroEdicao/:codigoDeposito',
