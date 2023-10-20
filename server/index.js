@@ -50,6 +50,7 @@ function validaJWT(req, res, next){
 app.post('/usuario/add', usuarioController.add)
 app.post('/usuario/validar', usuarioController.login);
 app.get("/usuario", validaJWT, usuarioController.index);
+app.get("/usuario/tipo", usuarioController.tipo);
 
 app.post("/deposito", validaJWT, depositoController.index);
 app.post("/deposito/add", validaJWT, depositoController.add);

@@ -8,7 +8,9 @@ class DepositoRepositorio{
 
     }
     index(usuarioId){
-        var sql = "select * from deposito where usuarioId = ?"
+        var sql = "SELECT * FROM deposito AS D "
+        + " INNER JOIN PermissaoUsuarioDeposito AS pud ON d.id = pud.depositoId"
+        + " WHERE pud.tipoPermissao != 1 AND pud.usuarioId = ? ";
     
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {
@@ -41,10 +43,17 @@ class DepositoRepositorio{
         let sql = `INSERT INTO deposito (nome, usuarioId) VALUES (?,?)`
 
         return new Promise((resolve, reject) => {
-            db.all(sql, [deposito.nome, deposito.usuarioId], function (err, result){ 
+            db.run(sql, [deposito.nome, deposito.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve("")
+                let sqlPer = `INSERT INTO PermissaoUsuarioDeposito (usuarioId, depositoId, tipoPermissao) VALUES (?,?,?)`;
+                db.run(sqlPer, [deposito.usuarioId, this.lastID, 3], function(err, result) {
+                    if (err)
+                        reject(err)
+                    else
+                        resolve("")
+                })
             }) 
         })
     }

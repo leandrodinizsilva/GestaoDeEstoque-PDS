@@ -33,13 +33,14 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS TipoUsuario (
-            idTipoUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
+            idTipoUsuario INTEGER PRIMARY KEY,
             descricao VARCHAR(30)
         )`, (createTableErr) => {
             if (!createTableErr) {
                 db.run(`DELETE FROM TipoUsuario;`);
-                db.run(`INSERT INTO TipoUsuario (descricao)
-                VALUES ('Usuário'), ('Gerente'), ('Administrador')`);
+                db.run(`delete from sqlite_sequence where name='TipoUsuario'`);
+                db.run(`INSERT INTO TipoUsuario (idTipoUsuario, descricao)
+                VALUES (1,'Usuário'), (2,'Gerente'), (3,'Administrador')`);
             }
         });
 
@@ -55,13 +56,14 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS TipoPermissaoDeposito (
-            idTipoPermissao INTEGER PRIMARY KEY AUTOINCREMENT,
+            idTipoPermissao INTEGER PRIMARY KEY,
             descricao VARCHAR(30)
         )`, (createTableErr) => {
             if (!createTableErr) {
                 db.run(`DELETE FROM TipoPermissaoDeposito;`);
-                db.run(`INSERT INTO TipoPermissaoDeposito (descricao)
-                VALUES ('Inválida'), ('Visualizar'), ('Editar')`);
+                db.run(`delete from sqlite_sequence where name='TipoPermissaoDeposito'`);
+                db.run(`INSERT INTO TipoPermissaoDeposito (idTipoPermissao,descricao)
+                VALUES (1,'Inválida'), (2,'Visualizar'), (3,'Editar')`);
             }
         });
 
