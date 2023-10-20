@@ -29,14 +29,52 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome text,
             usuarioId INTEGER,
-            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)    
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id)
         )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS TipoUsuario (
+            idTipoUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
+            descricao VARCHAR(30)
+        )`, (createTableErr) => {
+            if (!createTableErr) {
+                db.run(`DELETE FROM TipoUsuario;`);
+                db.run(`INSERT INTO TipoUsuario (descricao)
+                VALUES ('Usuário'), ('Gerente'), ('Administrador')`);
+            }
+        });
+
+
 
         db.run(`CREATE TABLE IF NOT EXISTS Usuario (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             login text UNIQUE,
             senha text,
-            nome text
+            tipoUsuario INT DEFAULT NULL,
+            nome text,
+            FOREIGN KEY(tipoUsuario) REFERENCES TipoUsuario(idTipoUsuario)
+        )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS TipoPermissaoDeposito (
+            idTipoPermissao INTEGER PRIMARY KEY AUTOINCREMENT,
+            descricao VARCHAR(30)
+        )`, (createTableErr) => {
+            if (!createTableErr) {
+                db.run(`DELETE FROM TipoPermissaoDeposito;`);
+                db.run(`INSERT INTO TipoPermissaoDeposito (descricao)
+                VALUES ('Inválida'), ('Visualizar'), ('Editar')`);
+            }
+        });
+
+
+
+        db.run(`CREATE TABLE IF NOT EXISTS PermissaoUsuarioDeposito (
+            usuarioId INT,
+            depositoId INT,
+            tipoPermissao INT DEFAULT NULL,
+            FOREIGN KEY (tipoPermissao) REFERENCES TipoPermissaoDeposito(idTipoPermissao),
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id),
+            FOREIGN KEY (depositoId) REFERENCES Deposito(id),
+            PRIMARY KEY(usuarioId, depositoId)
         )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS Entrada (
@@ -64,6 +102,9 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         )`);
     }
 });
+
+// //Dados Base
+
 
 
 export default db
