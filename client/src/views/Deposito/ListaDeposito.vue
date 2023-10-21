@@ -3,7 +3,7 @@
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Depósitos</h3>
     <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Depósito <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
-        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" :showStock="true" @editar="editar" @excluir="excluir" @exibirEstoque="exibirEstoque" :id="'id'" ></DataTable>
+        <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" :showStock="true" :showEditAccess="true" @editar="editar" @excluir="excluir" @exibirEstoque="exibirEstoque" @editarPermissao="editarPermissao" :id="'id'" ></DataTable>
     </div>
 
     <ModalPergunta ref="modalPergunta"></ModalPergunta>
@@ -40,6 +40,9 @@ import axios from 'axios'
           },
           exibirEstoque(deposito){
             this.$router.push({ name: 'ListaDepositoEstoque', params: { codigoDeposito: deposito.id } })
+          },
+          editarPermissao(deposito){
+            this.$router.push({ name: 'ListaDepositoPermissao', params: { codigoDeposito: deposito.id } })
           },
           async excluir(deposito) { 
             const ok = await this.$refs.modalPergunta.show({

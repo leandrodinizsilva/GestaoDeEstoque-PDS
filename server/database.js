@@ -79,6 +79,19 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             PRIMARY KEY(usuarioId, depositoId)
         )`);
 
+        db.run(`CREATE TABLE IF NOT EXISTS PermissaoUsuarioDepositoLog (
+            idLog INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuarioId INT,
+            depositoId INT,
+            tipoPermissao INT DEFAULT NULL,
+            dataAlterado DATETIME DEFAULT CURRENT_TIMESTAMP,
+            usuarioAlterouId INT,
+            FOREIGN KEY (tipoPermissao) REFERENCES TipoPermissaoDeposito(idTipoPermissao),
+            FOREIGN KEY (usuarioId) REFERENCES Usuario(id),
+            FOREIGN KEY (usuarioAlterouId) REFERENCES Usuario(id),
+            FOREIGN KEY (depositoId) REFERENCES Deposito(id)
+        )`)
+
         db.run(`CREATE TABLE IF NOT EXISTS Entrada (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             materialId INTEGER,

@@ -8,6 +8,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faWarehouse } from '@fortawesome/free-solid-svg-icons'
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
@@ -24,6 +25,7 @@ library.add(faPen)
 library.add(faTrash)
 library.add(faArrowLeft)
 library.add(faWarehouse)
+library.add(faSquareCheck)
 
 axios.defaults.baseURL = 'http://localhost:8000/'
 

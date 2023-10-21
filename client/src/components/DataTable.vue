@@ -21,6 +21,9 @@
                     <button title="Exibir Estoque"  v-if="showStock" style="margin-left:10px;" type="button" @click="$emit('exibirEstoque', item )" class="btn btn-secondary secondaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-warehouse" />
                     </button>
+                    <button title="Alterar Permissões"  v-if="showEditAccess" style="margin-left:10px;" type="button" @click="$emit('editarPermissao', item )" class="btn btn-secondary secondaryColorBtn">
+                        <font-awesome-icon icon="fa-solid fa-square-check" />
+                    </button>
 
                 </td>
                 <td v-for="(dataField, index) in dataFields" :key="index">{{item[dataField.field]}}</td>
@@ -61,6 +64,7 @@
             showRemoveButton: null,
             showAddButton: null,
             showStock: null,
+            showEditAccess: null,
             dataUrl: null,
             paramsUrl: null,
             id: null,
