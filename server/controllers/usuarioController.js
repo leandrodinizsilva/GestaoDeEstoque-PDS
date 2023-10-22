@@ -29,6 +29,11 @@ class UsuarioController{
         let promise = usuarioRepositorio.listarTipoUsuario()
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    carregarNome(req,res) {
+        let id = req.body.id
+        let promise = usuarioRepositorio.getNomeUsuario(id)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
 }
 
 export default UsuarioController

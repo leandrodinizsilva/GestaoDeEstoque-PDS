@@ -24,6 +24,15 @@ class DepositoController{
         let promise = depositoRepositorio.listarDepositoPermissao(id)
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    listarPermissaoDeposito(req, res) {
+        let promise = depositoRepositorio.listarPermissaoDeposito()
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
+    updatePermissao(req,res) {
+        let entrada = req.body
+        let promise = depositoRepositorio.updatePermissao(entrada)
+        promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });  
+    }
     add(req, res){
         let deposito = new Deposito(null, req.body.nome, index.usuarioId()) 
 

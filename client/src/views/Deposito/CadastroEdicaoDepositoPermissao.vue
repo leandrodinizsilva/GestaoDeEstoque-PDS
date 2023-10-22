@@ -1,55 +1,34 @@
 ﻿<template>
     <div align="center" id="content">
-        <h3 class="secondaryColor">Cadastro de Entrada</h3>
+        <h3 class="secondaryColor">Editando Permissões</h3>
         <div align="center">
             <div class="card" style="width:75vw;">
                 <div class="card-body" style="padding-top:35px; padding-bottom:30px;">
                     <ValidationForm :model="entrada" ref="validation" @save="salvar(entrada)">
-
-                        <div class="form-group col-10" style="display: flex;">
-                            <label class="col-2">Data</label>
-                            <div class="col-4" >
-                                <input v-model="entrada.data" id="nome" class="form-control" type="date"> 
-                                <span name="data" class="spanErro"></span>     
-                            </div>
-                        </div>
-
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Depósito</label>
                             <div class="col-4" >
-                                <select v-model="entrada.depositoId" class="form-control" v-on:change="carregarMateriais()">
-                                    <option value=""></option> 
-                                    <option v-for="deposito in depositos" :key="deposito.id" :value="deposito.id">
-                                        {{ deposito.nome }}
-                                    </option>
-                                </select>
-                                <span name="depositoId" class="spanErro"></span>     
+                                {{entrada.depositoName}}
                             </div>
                         </div>
 
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
-                            <label class="col-2">Material</label>
+                            <label class="col-2">Usuário</label>
                             <div class="col-4" >
-                                <select v-model="entrada.materialId" class="form-control" v-on:change="carregarUnidade()">
-                                    <option value=""></option> 
-                                    <option v-for="material in materiais" :key="material.id" :value="material.id">
-                                        {{ material.nome }}
-                                    </option>
-                                </select>
-                                <span name="materialId" class="spanErro"></span>     
+                                {{entrada.usuarioName}}
                             </div>
                         </div>
 
-                        <div class="form-group col-10" style="display: flex; margin-top: 10px;">
-                            <label class="col-2">Quantidade</label>
+                        <div class="form-group col-10" style="display: flex; margin-top:10px">
+                            <label class="col-2">Permissão</label>
                             <div class="col-4" >
-                                <div class="input-group mb-3" style="display: flex;  margin-bottom: 0 !important;">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">{{ unidadeMaterial }}</span>
-                                    </div>
-                                    <input type="number" class="form-control" v-model="entrada.quantidade" min="0">
-                                </div> 
-                                <span name="quantidade" class="spanErro"></span>    
+                                <select v-model="entrada.permissaoId" class="form-control" v-on:change="carregarPermissao()">
+                                    <option value=""></option> 
+                                    <option v-for="permissao in permissoes" :key="permissao.idTipoPermissao" :value="permissao.idTipoPermissao">
+                                        {{ permissao.descricao }}
+                                    </option>
+                                </select>
+                                <span name="permissaoId" class="spanErro"></span>     
                             </div>
                         </div>
 
@@ -79,89 +58,50 @@
             return {
                 entrada: {
                     id: this.$route.params.codigoEntrada,
-                    depositoId: null,
-                    materialId: null,
-                    quantidade: null,
-                    data: null
+                    depositoId: this.$route.params.codigoDeposito,
+                    usuarioId: this.$route.params.codigoUsuario,
+                    depositoName: null,
+                    usuarioName: null,
+                    permissaoId: null
                 },
                 unidadeMaterial: '?',
                 depositos: null,
-                materiais: null
+                permissoes: null
             }
         },
         methods: {
-            salvar(entrada) { 
-                if(entrada.id > 0){
-                    axios.post('entrada/update', entrada).then(
-                        this.$refs.toast.ativar('Entrada salva com sucesso.', 'sucesso'),
-                        this.$router.back()
-                    )
-                }
-                else{
-                    axios.post('entrada/add', entrada).then(
-                        this.$refs.toast.ativar('Entrada salva com sucesso.', 'sucesso'),
-                        this.$router.back()                 
-                    )
-                }      
-            },           
-            async excluir(entrada) { 
-                const ok = await this.$refs.modalPergunta.show({
-                    title: 'Excluir Entrada',
-                    message: 'Tem certeza que gostaria de excluir a entrada?',
-                    okButton: 'Sim',
-                })
-
-                if (ok) {
-                    axios.post('entrada/delete', {id: entrada.id}).then(() => { 
-                        this.$refs.toast.ativar('Entrada excluída com sucesso.', 'sucesso'),
-                        this.$router.back()
-                    })
-                }
+            salvar(entrada) {
+                console.log(entrada)
+                axios.post('deposito/depositoPermissao/editar', entrada).then(
+                    this.$refs.toast.ativar('Permissão Edita Com Sucesso', 'sucesso'),
+                    this.$router.back()
+                ) 
             },
-            recuperarDados() { 
-                axios.post('entrada/carregarRegistro', {id: this.entrada.id}).then( (result) => {
-                        this.entrada.data = result.data.data 
-                        this.entrada.depositoId = result.data.depositoId
-                        this.entrada.materialId = result.data.materialId   
-                        this.carregarUnidade()
-                        this.entrada.quantidade = result.data.quantidade            
+            carregarUsuario() {
+                console.log(this.entrada.usuarioId) 
+                axios.post('usuario/carregarNome', {id: this.entrada.usuarioId}).then( (result) => {
+                        console.log('assda')
+                        this.entrada.usuarioName = result.data.nome      
                    }
                 )
             },
-            carregarDepositos() {
-                axios.post('deposito').then( (result) => {
-                    this.depositos = result.data           
+            carregarDeposito() { 
+                axios.post('deposito/carregarRegistro', {id: this.entrada.depositoId}).then( (result) => {
+                        this.entrada.depositoName = result.data.nome      
                    }
                 )
             },
-            carregarMateriais() {
-                axios.post('material').then( (result) => {
-                    this.materiais = result.data           
+            carregarPermissao() {
+                axios.post('deposito/depositoPermissao').then( (result) => {
+                    this.permissoes = result.data           
                    }
-                )
-            },
-            carregarUnidade() {
-                if(this.entrada.materialId > 0){
-                    axios.post('material/carregarUnidadeMaterial', { "id": this.entrada.materialId }).then( (result) => {
-                        this.unidadeMaterial = result.data.unidade         
-                    })  
-                }
-                else {
-                    this.unidadeMaterial = '?'
-                }
-                
+                )              
             }
         },
         mounted(){
-            if(this.entrada.id > 0)
-                this.recuperarDados()
-
-            this.carregarDepositos()
-            this.carregarMateriais()
-            this.$refs.validation.required('data','Data')
-            this.$refs.validation.required('depositoId','Depósito')
-            this.$refs.validation.required('materialId','Material')
-            this.$refs.validation.required('quantidade','Quantidade')
+            this.carregarUsuario();
+            this.carregarDeposito();
+            this.carregarPermissao();
         }
 
         

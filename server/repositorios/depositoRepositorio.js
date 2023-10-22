@@ -39,10 +39,10 @@ class DepositoRepositorio{
         })
     }
     listarDepositoPermissao(depositoId) {
-        var sql = "SELECT id, nome, tipoPermissao, descricao FROM Usuario AS u"
+        var sql = "SELECT id, nome, tipoPermissao, COALESCE(descricao, 'Nenhuma') as descricao FROM Usuario AS u "
         + " LEFT JOIN PermissaoUsuarioDeposito AS pud ON u.id = pud.usuarioId "
-        + " LEFT JOIN TipoPermissaoDeposito AS tpd ON pud.tipoPermissao = tpd.idTipoPermissao"
-        + " AND pud.depositoId = ? ";
+        + " AND pud.depositoId = ? "
+        + " LEFT JOIN TipoPermissaoDeposito AS tpd ON pud.tipoPermissao = tpd.idTipoPermissao ";
 
         return new Promise((resolve, reject) => {
             db.all(sql, [depositoId], (err, rows) => {
@@ -108,6 +108,29 @@ class DepositoRepositorio{
                     resolve(rows[0])
             });
         })
+    }
+    listarPermissaoDeposito() {
+        let sql = `SELECT * FROM TipoPermissaoDeposito`;
+        return new Promise((resolve, reject) => {
+            db.all(sql, (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+    }
+    updatePermissao(entrada) {
+        let sql = "INSERT INTO PermissaoUsuarioDeposito (usuarioId, depositoId, tipoPermissao) "
+        + " VALUES (?, ?, ?) ON CONFLICT (usuarioId, depositoId) DO UPDATE SET tipoPermissao = ?";
+        return new Promise((resolve, reject) => {
+            db.all(sql, [entrada.usuarioId, entrada.depositoId, entrada.permissaoId, entrada.permissaoId], function (err, result){ 
+                if(err)
+                    reject(err)
+                else
+                    resolve("")
+            }) 
+        })  
     }
 }
 

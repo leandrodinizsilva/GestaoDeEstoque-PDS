@@ -75,6 +75,18 @@ class UsuarioRepositorio{
            });
         });
     }
+
+    getNomeUsuario(id) {
+        var sql = "SELECT nome FROM usuario WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            db.all(sql, [id], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows[0]);
+           });
+        });
+    }
 }
 
 export default UsuarioRepositorio

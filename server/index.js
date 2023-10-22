@@ -51,6 +51,7 @@ app.post('/usuario/add', usuarioController.add)
 app.post('/usuario/validar', usuarioController.login);
 app.get("/usuario", validaJWT, usuarioController.index);
 app.get("/usuario/tipo", usuarioController.tipo);
+app.post("/usuario/carregarNome", validaJWT, usuarioController.carregarNome);
 
 app.post("/deposito", validaJWT, depositoController.index);
 app.post("/deposito/add", validaJWT, depositoController.add);
@@ -59,6 +60,8 @@ app.post("/deposito/delete", validaJWT, depositoController.delete);
 app.post("/deposito/carregarRegistro", validaJWT, depositoController.carregarRegistro);
 app.post("/deposito/listaDepositoEstoque", validaJWT, depositoController.listarMaterialDoEstoque);
 app.post("/deposito/listaDepositoPermissao", validaJWT, depositoController.listarDepositoPermissao);
+app.post("/deposito/depositoPermissao", validaJWT, depositoController.listarPermissaoDeposito);
+app.post("/deposito/depositoPermissao/editar", validaJWT, depositoController.updatePermissao);
 
 app.post("/material", validaJWT, materialController.index);
 app.post("/material/add", validaJWT, materialController.add);
