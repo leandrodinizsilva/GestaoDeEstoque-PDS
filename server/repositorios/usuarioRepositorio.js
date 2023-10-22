@@ -19,7 +19,7 @@ class UsuarioRepositorio{
     }
     add(usuario){
         let validacao = `SELECT * FROM usuario where login = ?`
-        let sql = `INSERT INTO usuario (login, nome, senha) VALUES (?,?,?)`
+        let sql = `INSERT INTO usuario (login, nome, senha, tipoUsuario) VALUES (?,?,?,?)`
      
         return new Promise((resolve, reject) => {
             db.all(validacao, [usuario.login], function (err, result){
@@ -29,7 +29,7 @@ class UsuarioRepositorio{
                     if(result.length > 0)
                         resolve(false)
                     else{
-                        db.run(sql, [usuario.login, usuario.nome, usuario.senha], function (err, result){
+                        db.run(sql, [usuario.login, usuario.nome, usuario.senha, usuario.tipo], function (err, result){
                             if(err)
                                 reject(err)
                             else{
@@ -61,6 +61,31 @@ class UsuarioRepositorio{
                 }
             })
         })
+    }
+
+    listarTipoUsuario(){
+        var sql = "select * from TipoUsuario";
+
+        return new Promise((resolve, reject) => {
+            db.all(sql, [], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows);
+           });
+        });
+    }
+
+    getNomeUsuario(id) {
+        var sql = "SELECT nome FROM usuario WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            db.all(sql, [id], (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows[0]);
+           });
+        });
     }
 }
 

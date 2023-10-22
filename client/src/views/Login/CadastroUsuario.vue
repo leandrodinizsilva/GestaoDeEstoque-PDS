@@ -24,7 +24,20 @@
                         <input type="password" class="form-control loginInput" v-model="usuario.senha"  placeholder="Insira sua senha">
                         <span name="senha" class="spanErro"></span>
                     </div>
-                                         
+
+                    <div>
+                        <label for="tipoUsuario">Tipo de Usuário:</label>
+                        <div v-for="tipoUsuario in tipoUsuarios" :key="tipoUsuario.id">
+                            <input
+                            type="radio"
+                            v-model="usuario.tipo"
+                            :value="tipoUsuario.idTipoUsuario"
+                            name="tipoUsuario"
+                            />
+                            {{ tipoUsuario.descricao }}
+                        </div>
+                    </div>
+                    
                     <button type="submit" id="loginButton" class="btn btn-secondary insere primaryColorBtn" >Salvar</button>                  
 
                 </div>
@@ -46,8 +59,10 @@ import axios from 'axios';
                 usuario:{
                     login: null,
                     senha: null,
-                    nome: null
-                }
+                    nome: null,
+                    tipo: 1
+                },
+                tipoUsuarios: [], // Esta variável armazenará os valores da tabela TipoUsuario
             }
         },
         methods: {
@@ -67,7 +82,14 @@ import axios from 'axios';
             this.$refs.validation.required('login',"Login")
             this.$refs.validation.required('nome',"Nome")
             this.$refs.validation.required('senha',"Senha")
-        }      
+            axios.get('http://localhost:8000/usuario/tipo') // Suponha que essa rota busca os valores da tabela TipoUsuario
+            .then(response => {
+            this.tipoUsuarios = response.data;
+            })
+            .catch(error => {
+            console.error('Erro ao buscar os valores da tabela TipoUsuario', error);
+            });
+        }
     }
 </script>
 
