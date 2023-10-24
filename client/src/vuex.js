@@ -11,7 +11,6 @@ const store = createStore({
     },
     mutations: {
       login(state, obj) {
-        console.log(obj)
         if(obj) {
             state.usuario = obj.usuario
             state.tokenJWT = obj.token
@@ -31,6 +30,11 @@ const store = createStore({
         getUsuarioNome(state){
             return state.usuario.nome
         },
+        getUsuarioTipo(state){
+          console.log("asdasd");
+          console.log(state);
+          return state.usuario.tipo
+      },
     },
     plugins: [createPersistedState()],  
   })

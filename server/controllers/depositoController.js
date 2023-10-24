@@ -11,7 +11,8 @@ class DepositoController{
 
     }
     index(req, res){
-        let promise = depositoRepositorio.index(index.usuarioId())
+        let tipoUsuario = req.body.tipoUsuario;
+        let promise = depositoRepositorio.index(index.usuarioId(), tipoUsuario)
         promise.then(function (result) { res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
     listarMaterialDoEstoque(req, res){

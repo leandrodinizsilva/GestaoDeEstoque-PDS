@@ -50,7 +50,7 @@ import Toast from '@/components/ToastComponent.vue';
                 axios.post('usuario/validar', { "login" : usuario.login, "senha": usuario.senha}).then( (res) =>{ 
                     if(res.data.valido){
                         this.$refs.toast.ativar('Bem vindo', 'sucesso')
-                        this.$store.commit('login', {"usuario": {nome: res.data.usuario.nome}, "token": res.data.token })
+                        this.$store.commit('login', {"usuario": {nome: res.data.usuario.nome, tipo: res.data.usuario.tipoUsuario}, "token": res.data.token })
                         this.$router.push('/home')
                     }                    
                     else
