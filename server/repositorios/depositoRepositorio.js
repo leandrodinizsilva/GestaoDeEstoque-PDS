@@ -7,14 +7,26 @@ class DepositoRepositorio{
     constructor(){
 
     }
-    index(usuarioId, tipoUsuario){
+    async index(usuarioId){
+        var sql = "SELECT tipoUsuario FROM Usuario WHERE id = ? ";
+
+        let tipoUsuario = await new Promise((resolve, reject) => {
+            db.all(sql, [usuarioId] ,(err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows[0].tipoUsuario);
+
+            });
+        })
+
         var sql = "";
         if (tipoUsuario == 3) {
             sql = "SELECT * FROM deposito AS d  ";
         } else {
             var sql = "SELECT * FROM deposito AS d "
             + " INNER JOIN PermissaoUsuarioDeposito AS pud ON d.id = pud.depositoId"
-            + " WHERE pud.tipoPermissao != 1 AND pud.usuarioId = " + usuarioId +"";
+            + " WHERE pud.tipoPermissao != 1 AND pud.usuarioId = "+ usuarioId +"";
         }
         
     
