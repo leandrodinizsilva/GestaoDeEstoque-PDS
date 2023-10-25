@@ -40,15 +40,18 @@ class DepositoRepositorio{
         })
     }
     listarMaterialDoEstoque(depositoId){
-        var sql = "SELECT e.materialId, m.nome, u.nome AS nomeUnidade, "
-                + "(SUM(e.quantidade) - COALESCE(SUM(s.quantidade), 0)) AS quantidade FROM Entrada AS e "
-                + "LEFT JOIN Material AS m ON e.materialId = m.id "
-                + "LEFT JOIN Saida AS s ON s.materialId = e.materialId "
-                + "LEFT JOIN Unidade AS u ON m.unidadeId = u.id "
-                + "WHERE e.depositoId = ? GROUP BY e.materialId";
-
+        var sql = "SELECT materialId, m.nome, u.nome AS nomeUnidade, SUM(quantidade) as quantidade "
+        + " FROM ( "
+        + " SELECT materialId, quantidade FROM entrada WHERE depositoId = ? "
+        + " UNION SELECT materialId, -quantidade FROM saida WHERE depositoId = ? "
+        + " UNION SELECT materialId, quantidade FROM Transferencia WHERE depositoDestinoId = ? "
+        + " UNION SELECT materialId, -quantidade FROM Transferencia WHERE depositoOrigemId = ? "
+        +") AS tt "
+        + " LEFT JOIN Material AS m ON tt.materialId = m.id "
+        + " LEFT JOIN Unidade AS u ON m.unidadeId = u.id "
+        + " GROUP BY materialId;";
         return new Promise((resolve, reject) => {
-            db.all(sql, [depositoId], (err, rows) => {
+            db.all(sql, [depositoId, depositoId, depositoId, depositoId], (err, rows) => {
                 if (err) {
                     reject(err)
                 }
