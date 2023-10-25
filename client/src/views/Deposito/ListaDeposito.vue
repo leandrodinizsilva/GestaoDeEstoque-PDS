@@ -1,7 +1,8 @@
 ﻿<template>
     <div align="center">
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Depósitos</h3>
-    <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Depósito <font-awesome-icon icon="fa-solid fa-plus"/></button>
+
+    <button v-if="this.$store.state.usuario.tipo != 1" class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Depósito <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
         <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :paramsUrl="{tipoUsuario: this.$store.state.usuario.tipo}" :dataUrl="'deposito'" :showEditButton="true" :showRemoveButton="true" :showStock="true" :showEditAccess="true" @editar="editar" @excluir="excluir" @exibirEstoque="exibirEstoque" @editarPermissao="editarPermissao" :id="'id'" ></DataTable>
     </div>
@@ -60,6 +61,7 @@ import axios from 'axios'
           },
         },
         mounted(){
+
         }
     }
 </script>
