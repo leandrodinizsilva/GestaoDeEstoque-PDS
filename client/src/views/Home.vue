@@ -14,7 +14,7 @@
           {{ deposito.nome }}
         </option>
       </select>
-      <span name="depositoId" class="spanErro"></span>
+      <span name="DepositoSelecionado" class="spanErro"></span>
     </div>
   </div>
 
@@ -35,7 +35,7 @@
           {{ material.nome }}
         </option>
       </select>
-      <span name="materialId" class="spanErro"></span>
+      <span name="MaterialSelecionado" class="spanErro"></span>
     </div>
   </div>
 
