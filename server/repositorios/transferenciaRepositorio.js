@@ -5,7 +5,7 @@ class TransferenciaRepositorio{
 
     }
     index(usuarioId){
-        var sql = "select T.id as id, T.data as data, D1.nome as nomeDepositoOrigem, D2.nome as nomeDepositoDestino, M.nome as nomeMaterial, T.quantidade as quantidade, U.nome as nomeUnidade from transferencia as T right join deposito as D1 on T.depositoOrigemId = D1.id right join Deposito as D2 on T.depositoDestinoId = D2.id right join Material as M on T.materialId = M.id right join Unidade as U on M.unidadeId = U.id where T.usuarioId = ?"
+        var sql = "select T.id as id, T.data as data, D1.nome as nomeDepositoOrigem, D2.nome as nomeDepositoDestino, M.nome as nomeMaterial, T.quantidade as quantidade, U.nome as nomeUnidade from transferencia as T left join deposito as D1 on T.depositoOrigemId = D1.id left join Deposito as D2 on T.depositoDestinoId = D2.id left join Material as M on T.materialId = M.id left join Unidade as U on M.unidadeId = U.id where T.usuarioId = ?"
     
         return new Promise((resolve, reject) => {
             db.all(sql, [usuarioId], (err, rows) => {

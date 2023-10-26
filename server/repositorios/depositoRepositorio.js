@@ -95,7 +95,6 @@ class DepositoRepositorio{
     async delete(id){
         let sql = `DELETE FROM deposito WHERE id = ?`
         
-        await materialRepositorio.deleteTodosMateriaisDoDeposito(id)
         return new Promise((resolve, reject) => {
             db.all(sql, [id], function (err){ 
                 if(err)
@@ -153,6 +152,64 @@ class DepositoRepositorio{
             }) 
         })  
     }
+    async carregarQuantidadesMovimentacoes(depositoId, materialId, datas){
+        let result = []
+
+        let sql1 = 'SELECT data, quantidade from entrada where depositoId = ? and materialId = ?'
+        let entradas = await new Promise((resolve, reject) => {
+            db.all(sql1, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+
+        let sql2 = 'SELECT data, -quantidade as quantidade from saida where depositoId = ? and materialId = ?'
+        let saidas = await new Promise((resolve, reject) => {
+            db.all(sql2, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+
+        let sql3 = 'SELECT data, quantidade as quantidade from transferencia where depositoDestinoId = ? and materialId = ?'
+        let transferencias = await new Promise((resolve, reject) => {
+            db.all(sql3, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+
+        for(var i = 0; i < datas.length; i++)
+        {
+            var entradasAux = entradas.filter((entrada) => new Date(entrada.data) <= new Date(datas[i])).map(entrada => entrada.quantidade)
+            var saidasAux = saidas.filter((saida) => new Date(saida.data) <= new Date(datas[i])).map(saida => saida.quantidade)
+            var transferenciasAux = transferencias.filter((transferencia) => new Date(transferencia.data) <= new Date(datas[i])).map(transferencia => transferencia.quantidade)
+
+            var total = 0
+            
+            entradasAux.forEach(entrada => {
+                total += entrada
+            });
+
+            saidasAux.forEach(saida => {
+                total += saida
+            });
+
+            transferenciasAux.forEach(transferencia => {
+                total += transferencia
+            });
+
+            result.push(total)
+        }
+
+        return result
+    }
 }
 
 export default DepositoRepositorio

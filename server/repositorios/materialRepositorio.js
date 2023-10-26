@@ -10,7 +10,7 @@ class MaterialRepositorio{
 
     }
     index(){
-        var sql = "select M.id as id, M.nome as nome, M.preco as preco, U.nome as nomeUnidade from Material as M right join Unidade as U on M.unidadeId = U.id"
+        var sql = "select M.id as id, M.nome as nome, M.preco as preco, U.nome as nomeUnidade from Material as M left join Unidade as U on M.unidadeId = U.id"
 
         return new Promise((resolve, reject) => {
             db.all(sql, [], (err, rows) => {
