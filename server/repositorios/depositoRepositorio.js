@@ -244,8 +244,13 @@ class DepositoRepositorio{
         
         let arr = datasEntradas.concat(datasSaidas).concat(datasTransferencias).map(x => x.data)
         let arr1 = arr.filter((item,index) => arr.indexOf(item) === index).sort((a,b) => { return new Date(a) - new Date(b)});
+        var formatado = []
+        arr1.forEach(data => {
+            var aux = data.split("-")    
+            formatado.push(aux[2]+ "/" +aux[1]+ "/" +aux[0].substring(2))    
+        })
 
-        return {"datas": arr1, "datasFormatadas": arr1}
+        return {"datas": arr1, "datasFormatadas": formatado}
     }
     async carregarRelatorioMaterialPorTempo(depositoId, materialId){
         let datas = await this.carregarDatasMovimentacoes(depositoId, materialId)
