@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" id="loginButton" class="btn btn-secondary insere primaryColorBtn" >Salvar</button>                  
+                    <button type="submit" id="loginButton" class="btn btn-secondary insere primaryColorBtn" style="margin-top: 15px;">Salvar</button>                  
 
                 </div>
             </ValidationForm>

@@ -19,7 +19,7 @@ class SaidaRepositorio{
     async add(saida){
         let sql = `INSERT INTO saida (materialId, depositoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?)`
 
-        var quantidadeDisponivel =  await this.carregarQuantidadeDisponivelMaterial(saida.materialId)
+        var quantidadeDisponivel =  await this.carregarQuantidadeDisponivelMaterial(saida)
         
         return new Promise((resolve, reject) => {
             if(saida.quantidade > quantidadeDisponivel){
@@ -83,12 +83,13 @@ class SaidaRepositorio{
             }) 
         }) 
     }
-    async carregarQuantidadeDisponivelMaterial(materialId){
-        let sql = "select SUM(quantidade) as quantidade from Entrada where materialId = ?"
-        let sql2 = "select SUM(quantidade) as quantidade from Saida where materialId = ?"
+    async carregarQuantidadeDisponivelMaterial(saida){
+        let sql = "select SUM(quantidade) as quantidade from Entrada where materialId = ? and depositoId = ? and data <= ?"
+        let sql2 = "select SUM(quantidade) as quantidade from Saida where materialId = ? and depositoId = ? and data <= ?"
+        let sql3 = "select SUM(quantidade) as quantidade from Transferencia where materialId = ? and depositoDestinoId = ? and data <= ?"
 
         var quantidadeEntrada = await new Promise((resolve, reject) => {
-            db.all(sql, [materialId], function (err, result){ 
+            db.all(sql, [saida.materialId, saida.depositoId, saida.data], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve(result[0].quantidade)
@@ -96,14 +97,22 @@ class SaidaRepositorio{
         })
         
         var quantidadeSaida = await new Promise((resolve, reject) => {
-            db.all(sql2, [materialId], function (err, result){ 
+            db.all(sql2, [saida.materialId, saida.depositoId, saida.data], function (err, result){ 
                 if(err)
                     reject(err)
                 resolve(result[0].quantidade)
             })  
         })
 
-        return quantidadeEntrada - quantidadeSaida;
+        var quantidadeTransferencia = await new Promise((resolve, reject) => {
+            db.all(sql3, [saida.materialId, saida.depositoId, saida.data], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve(result[0].quantidade)
+            })  
+        })
+
+        return quantidadeEntrada - quantidadeSaida + quantidadeTransferencia;
 
     }
 }

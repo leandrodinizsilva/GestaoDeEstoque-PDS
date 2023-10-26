@@ -60,6 +60,13 @@ class DepositoController{
         let promise = depositoRepositorio.carregarRegistro(id)
         promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    carregarRelatorioMaterialPorTempo(req, res){
+        let depositoId = req.body.depositoId
+        let materialId = req.body.materialId
+
+        let promise = depositoRepositorio.carregarRelatorioMaterialPorTempo(depositoId, materialId)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
 }
 
 export default DepositoController

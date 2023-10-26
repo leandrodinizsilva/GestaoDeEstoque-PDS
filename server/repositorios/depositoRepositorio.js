@@ -210,6 +210,50 @@ class DepositoRepositorio{
 
         return result
     }
+    async carregarDatasMovimentacoes(depositoId, materialId){
+
+        let sql1 = "SELECT data from entrada where depositoId = ? and materialId = ?"
+        let datasEntradas = await new Promise((resolve, reject) => {
+            db.all(sql1, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+
+        let sql2 = "SELECT data from saida where depositoId = ? and materialId = ?"
+        let datasSaidas = await new Promise((resolve, reject) => {
+            db.all(sql2, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+
+        let sql3 = "SELECT data from transferencia where depositoDestinoId = ? and materialId = ?"
+        let datasTransferencias = await new Promise((resolve, reject) => {
+            db.all(sql3, [depositoId, materialId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        })
+        
+        let arr = datasEntradas.concat(datasSaidas).concat(datasTransferencias).map(x => x.data)
+        let arr1 = arr.filter((item,index) => arr.indexOf(item) === index).sort((a,b) => { return new Date(a) - new Date(b)});
+
+        return {"datas": arr1, "datasFormatadas": arr1}
+    }
+    async carregarRelatorioMaterialPorTempo(depositoId, materialId){
+        let datas = await this.carregarDatasMovimentacoes(depositoId, materialId)
+        let quantidades = await this.carregarQuantidadesMovimentacoes(depositoId, materialId, datas.datas)
+
+        return {"datas": datas.datasFormatadas, "quantidades": quantidades}
+
+    }
 }
 
 export default DepositoRepositorio
