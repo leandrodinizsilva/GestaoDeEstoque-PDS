@@ -1,83 +1,90 @@
 ﻿<template>
   <ToastComponent ref="toast"></ToastComponent>
+  <div style="width: 600px !important; height: 400px !important">
+    <BarChart
+      :labels="labelsMaterialPorData"
+      :label="labelMaterialPorData"
+      :data="dataMaterialPorData"
+    ></BarChart>
+  </div>
 </template>
 
 <script>
-import ToastComponent from '../components/ToastComponent.vue'
-import { mapState } from 'vuex';
+import ToastComponent from "../components/ToastComponent.vue";
+import BarChart from "@/components/BarChart.vue";
+import { mapState } from "vuex";
 
 export default {
-  name: 'BoardView',
-  components: { ToastComponent },
-  data(){
-    return{
-    }
+  name: "BoardView",
+  components: { ToastComponent, BarChart },
+  data() {
+    return {
+      dataMaterialPorData: [12, 5, 30],
+      labelsMaterialPorData: ["teste1", "teste2", "teste3"],
+      labelMaterialPorData: "teste",
+    };
   },
-  computed: mapState(['sessaoValida']),
-  methods:{ 
-    
-    
+  computed: mapState(["sessaoValida"]),
+  methods: {
+    carregar,
   },
-  mounted(){
-  },
-  
-}
+  mounted() {},
+};
 </script>
 
 <style>
-.textoCard{
+.textoCard {
   font-size: small;
 }
 #divCard {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-#divBoard{
-  display:flex;
+#divBoard {
+  display: flex;
   max-width: 85vw;
   height: fit-content;
   overflow: auto;
 }
 
-.cardTask{
+.cardTask {
   background-color: black;
-  color:white;
+  color: white;
   height: 100px;
 }
 
-.colunm{
+.colunm {
   width: 200px !important;
   min-height: 80vh !important;
   margin-right: 10px;
-  min-width:200px;
+  min-width: 200px;
 }
 
-.colunmLast{
+.colunmLast {
   width: 20rem !important;
   min-height: 80vh !important;
   margin-right: 0px !important;
 }
 
-.insere{
+.insere {
   margin-bottom: 30px;
 }
-.spanErro{
+.spanErro {
   font-size: small;
 }
 
-.modal-content{
+.modal-content {
   width: 600px !important;
 }
 
-.card-title{
+.card-title {
   margin-bottom: 20px !important;
 }
 
-.card{
+.card {
   padding: 10px !important;
 }
-
 </style>
