@@ -87,6 +87,7 @@ class SaidaRepositorio{
         let sql = "select SUM(quantidade) as quantidade from Entrada where materialId = ? and depositoId = ? and data <= ?"
         let sql2 = "select SUM(quantidade) as quantidade from Saida where materialId = ? and depositoId = ? and data <= ?"
         let sql3 = "select SUM(quantidade) as quantidade from Transferencia where materialId = ? and depositoDestinoId = ? and data <= ?"
+        let sql4 = "select SUM(quantidade) as quantidade from Transferencia where materialId = ? and depositoOrigemId = ? and data <= ?"
 
         var quantidadeEntrada = await new Promise((resolve, reject) => {
             db.all(sql, [saida.materialId, saida.depositoId, saida.data], function (err, result){ 
@@ -104,7 +105,7 @@ class SaidaRepositorio{
             })  
         })
 
-        var quantidadeTransferencia = await new Promise((resolve, reject) => {
+        var quantidadeTransferenciaEntrando = await new Promise((resolve, reject) => {
             db.all(sql3, [saida.materialId, saida.depositoId, saida.data], function (err, result){ 
                 if(err)
                     reject(err)
@@ -112,7 +113,15 @@ class SaidaRepositorio{
             })  
         })
 
-        return quantidadeEntrada - quantidadeSaida + quantidadeTransferencia;
+        var quantidadeTransferenciaSaindo = await new Promise((resolve, reject) => {
+            db.all(sql4, [saida.materialId, saida.depositoId, '20' + saida.data], function (err, result){ 
+                if(err)
+                    reject(err)
+                resolve(result[0].quantidade)
+            })  
+        })
+
+        return quantidadeEntrada - quantidadeSaida + quantidadeTransferenciaEntrando - quantidadeTransferenciaSaindo;
 
     }
 }

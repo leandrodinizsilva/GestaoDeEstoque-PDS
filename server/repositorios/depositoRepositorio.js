@@ -1,7 +1,9 @@
 import db from '../database.js'
 import MaterialRepositorio from './materialRepositorio.js';
+import SaidaRepositorio from './saidaRepositorio.js';
 
 const materialRepositorio = new MaterialRepositorio
+const saidaRepositorio = new SaidaRepositorio
 
 class DepositoRepositorio{
     constructor(){
@@ -210,6 +212,70 @@ class DepositoRepositorio{
 
         return result
     }
+    async carregarDatasMovimentacaoDeposito(depositoId){
+        let sql1 = "SELECT data from entrada where depositoId = ?"
+        let datasEntradas = await new Promise((resolve, reject) => {
+            db.all(sql1, [depositoId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        }) 
+
+        let sql2 = "SELECT data from saida where depositoId = ?"
+        let datasSaidas = await new Promise((resolve, reject) => {
+            db.all(sql2, [depositoId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        }) 
+
+        let sql3 = "SELECT data from transferencia where depositoOrigemId = ? or depositoDestinoId = ?"
+        let datasTransferencias = await new Promise((resolve, reject) => {
+            db.all(sql3, [depositoId, depositoId], (err, rows) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve(rows)
+            });
+        }) 
+
+        let arr = datasEntradas.concat(datasSaidas).concat(datasTransferencias).map(x => x.data)
+        let arr1 = arr.filter((item,index) => arr.indexOf(item) === index).sort((a,b) => { return new Date(a) - new Date(b)});
+        var formatado = []
+        arr1.forEach(data => {
+            var aux = data.split("-")    
+            formatado.push(aux[2]+ "/" +aux[1]+ "/" +aux[0].substring(2))    
+        })
+
+        return {"datas": formatado}
+
+    }
+    async carregarRelatorioMaterialPorData(depositoId, data){
+
+        let materiais = await materialRepositorio.index()
+        materiais = materiais.map(({ id, nome }) => ({id, nome}));
+        let quantidades = []
+
+        for (let i = 0; i < materiais.length; i++) {
+            let quantidade =  0
+            quantidade = await this.carregarQuantidadeMaterialPorData(depositoId, materiais[i].id, data)
+            quantidades.push(quantidade)
+        }
+
+        
+        return {"materiais": materiais.map(x => x.nome), "quantidades": quantidades}
+    }
+    async carregarQuantidadeMaterialPorData(depositoId, materialId, data){
+
+        let quantidade = await saidaRepositorio.carregarQuantidadeDisponivelMaterial({"depositoId": depositoId, "materialId": materialId, "data": '20' + data})
+
+        return quantidade
+    }
+  
     async carregarDatasMovimentacoes(depositoId, materialId){
 
         let sql1 = "SELECT data from entrada where depositoId = ? and materialId = ?"
@@ -232,9 +298,9 @@ class DepositoRepositorio{
             });
         })
 
-        let sql3 = "SELECT data from transferencia where depositoDestinoId = ? and materialId = ?"
+        let sql3 = "SELECT data from transferencia where depositoDestinoId = ? or depositoOrigemId = ? and materialId = ?"
         let datasTransferencias = await new Promise((resolve, reject) => {
-            db.all(sql3, [depositoId, materialId], (err, rows) => {
+            db.all(sql3, [depositoId, depositoId, materialId], (err, rows) => {
                 if (err)
                     reject(err)
                 else
@@ -249,7 +315,7 @@ class DepositoRepositorio{
             var aux = data.split("-")    
             formatado.push(aux[2]+ "/" +aux[1]+ "/" +aux[0].substring(2))    
         })
-
+        
         return {"datas": arr1, "datasFormatadas": formatado}
     }
     async carregarRelatorioMaterialPorTempo(depositoId, materialId){
@@ -260,5 +326,6 @@ class DepositoRepositorio{
 
     }
 }
+
 
 export default DepositoRepositorio

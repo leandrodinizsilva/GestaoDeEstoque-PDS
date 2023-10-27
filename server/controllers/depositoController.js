@@ -67,6 +67,19 @@ class DepositoController{
         let promise = depositoRepositorio.carregarRelatorioMaterialPorTempo(depositoId, materialId)
         promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
     }
+    carregarDatasMovimentacaoDeposito(req, res){
+        let depositoId = req.body.depositoId
+
+        let promise = depositoRepositorio.carregarDatasMovimentacaoDeposito(depositoId)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
+    carregarRelatorioMaterialPorData(req, res){
+        let depositoId = req.body.depositoId
+        let data = req.body.data
+
+        let promise = depositoRepositorio.carregarRelatorioMaterialPorData(depositoId, data)
+        promise.then(function(result){ res.json(result) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
+    }
 }
 
 export default DepositoController

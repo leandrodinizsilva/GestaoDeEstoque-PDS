@@ -52,20 +52,14 @@
           </div>
         </div>
       </div>
-      <BarChart
-        style="margin-top: 20px"
-        :labels="labelsMaterialPorData"
-        :label="labelMaterialPorData"
-        :data="dataMaterialPorData"
-        :key="key"
-      ></BarChart>
+      <BarChart style="margin-top: 20px" :labels="labelsMaterialPorData" :label="labelMaterialPorData" :data="dataMaterialPorData"  :key="key"></BarChart>
     </div>
   </div>
 
   <div style="margin: auto; width: 50%; padding: 10px">
     <div style="width: 700px !important; height: 500px !important">
       <h2 style="text-align: center; margin-bottom: 20px">
-        Material Por Tempo
+        Material Por Data
       </h2>
       <div
         id="dropdownsDepositoMaterial"
@@ -81,9 +75,9 @@
           <label class="col-2">Depósito</label>
           <div class="col-4">
             <select
-              v-model="depositoSelecionado"
+              v-model="depositoSelecionado2"
               class="form-control"
-              v-on:change="carregarRelatorioMaterialPorTempo()"
+              v-on:change="carregarDatas()"
             >
               <option value=""></option>
               <option
@@ -95,32 +89,31 @@
               </option>
             </select>
           </div>
-          <label class="col-2" style="margin-left: 15px">Material</label>
+          <label class="col-2" style="margin-left: 15px">Data</label>
           <div class="col-4">
             <select
-              v-model="materialSelecionado"
+              v-model="dataSelecionda"
               class="form-control"
-              v-on:change="carregarRelatorioMaterialPorTempo()"
-            >
+              v-on:change="carregarRelatorioMaterialPorData()">
               <option value=""></option>
               <option
-                v-for="material in materiais"
-                :key="material.id"
-                :value="material.id"
-              >
-                {{ material.nome }}
+                v-for="data in datas"
+                :key="data"
+                :value="data">
+                {{ data }}
               </option>
             </select>
           </div>
         </div>
       </div>
-      <PieChart
-        style="margin-top: 20px"
-        :labels="labelsMaterialPorData"
-        :label="labelMaterialPorData"
-        :data="dataMaterialPorData"
-        :key="key"
-      ></PieChart>
+      <div style=" position: absolute;
+              left: 30%;
+              width: 500px;
+              height: 500px;
+          ">
+        <PieChart  style="margin-top: 20px" :labels="labelsMaterialPorQuantidade" :label="labelMaterialPorQuantidade" :data="dataMaterialPorQuantidade" :key="key2"></PieChart>
+      </div>
+
     </div>
   </div>
 </template>
@@ -140,11 +133,18 @@ export default {
       dataMaterialPorData: [],
       labelsMaterialPorData: [],
       labelMaterialPorData: "# material",
+      dataMaterialPorQuantidade: [],
+      labelsMaterialPorQuantidade: [],
+      labelMaterialPorQuantidade: "# material",
       depositos: [],
       depositoSelecionado: null,
+      depositoSelecionado2: null,
       materiais: [],
       materialSelecionado: null,
+      dataSelecionda:null,
+      datas: [],
       key: 0,
+      key2:0
     };
   },
   computed: mapState(["sessaoValida"]),
@@ -159,6 +159,12 @@ export default {
         this.materiais = result.data;
       });
     },
+    carregarDatas() {
+      axios.post("deposito/carregarDatasMovimentacaoDeposito", {"depositoId": this.depositoSelecionado2}).then((result) => {
+        this.datas = result.data.datas;
+        console.log(this.datas)
+      });
+    },
     carregarRelatorioMaterialPorTempo() {
       this.axios
         .post("deposito/carregarRelatorioMaterialPorTempo", {
@@ -166,12 +172,26 @@ export default {
           materialId: this.materialSelecionado,
         })
         .then((result) => {
-          this.dataMaterialPorData = result.data.quantidades;
-          this.labelsMaterialPorData = result.data.datas;
-          this.labelMaterialPorData = "# material";
-          this.key++;
+          this.dataMaterialPorData = result.data.quantidades
+          this.labelsMaterialPorData = result.data.datas
+          this.labelMaterialPorData = "# material"
+          this.key++
+          this.key2++
         });
     },
+    carregarRelatorioMaterialPorData(){
+      var dia  = this.dataSelecionda.split("/")[0]
+      var mes  = this.dataSelecionda.split("/")[1]
+      var ano  = this.dataSelecionda.split("/")[2]
+
+      var data = ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+
+      this.axios.post('deposito/carregarRelatorioMaterialPorData', {"depositoId": this.depositoSelecionado2, "data": data}).then((result) => {
+        this.labelsMaterialPorQuantidade = result.data.materiais
+        this.dataMaterialPorQuantidade = result.data.quantidades
+        this.key2++
+      })
+    }
   },
   mounted() {
     this.carregarDepositos();

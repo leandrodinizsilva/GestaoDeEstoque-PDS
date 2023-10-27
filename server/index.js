@@ -65,6 +65,8 @@ app.post("/deposito/listaDepositoPermissao", validaJWT, depositoController.lista
 app.post("/deposito/depositoPermissao", validaJWT, depositoController.listarPermissaoDeposito);
 app.post("/deposito/depositoPermissao/editar", validaJWT, depositoController.updatePermissao);
 app.post("/deposito/carregarRelatorioMaterialPorTempo", validaJWT, depositoController.carregarRelatorioMaterialPorTempo);
+app.post("/deposito/carregarDatasMovimentacaoDeposito", validaJWT, depositoController.carregarDatasMovimentacaoDeposito);
+app.post("/deposito/carregarRelatorioMaterialPorData", validaJWT, depositoController.carregarRelatorioMaterialPorData);
 
 app.post("/material", validaJWT, materialController.index);
 app.post("/material/add", validaJWT, materialController.add);
