@@ -110,30 +110,49 @@ O back-end sera feito em node e o banco de dados escolhidos é o SQlite para fac
 |3| Implementar a lógica de controle de permissão | Pedro Cimini |
 |4| Implementar a notificação ao usuário que teve sua permissão modificada | Hélio Martins |
 
-* História #7: Como usuário gostaria de buscar um estoque e solicitar permissão de controle no mesmo.
 
-| # | Tarefas | Responsáveis |
-| --- | ---- | ---- |
-|1| Criar as tabelas necessárias para solicitações de permissão | Leandro Diniz |
-|2| Implementar tela de busca de estoque | Kaio Lucas |
-|4| Implementar a lógica da busca de estoque| Pedro Cimini 
-|5| Implementar a lógica da solicitação de permissões | Hélio Martins |
-|6| Implementar a tela de solicitações de permissões | Hélio Martins |
-|7| Implementar a lógica de aceitar/rejeitar solicitação de permissões | Leandro Diniz |
-
-* História #8: Como usuário gostaria de localizar onde um produto se encontra.
+* História #7: Como usuário gostaria de localizar onde um produto se encontra.
 
 | # | Tarefas | Responsáveis |
 | --- | ---- | ---- |
 |1| Implementar tela de busca de produtos no estoque | Kaio Lucas |
-|1| Implementar tela de exibição dos produtos| Kaio Lucas |
-|2| Implementar a lógica de busca de produtos no estoque | Pedro Cimini |
+|2| Implementar tela de exibição dos produtos| Kaio Lucas |
+|3| Implementar a lógica de busca de produtos no estoque | Pedro Cimini |
 
-* História #9: Como gerente de estoque gostaria de ter um relatório de entradas e saídas de um estoque.
+* História #8: Como gerente de estoque gostaria de ter um relatório de entradas e saídas de um estoque.
 
 | # | Tarefas | Responsáveis |
 | --- | ---- | ---- |
-|2| Implementar a tela principal do dashboard| Kaio Lucas |
-|3| Implementar tela de solicitação de relatórios | Kaio Lucas |
-|4| Implementar a lógica do dashboard | Pedro Cimini |
-|5| Implementar a logica da geração de relatórios | Hélio Martins |
+|1| Implementar a tela principal do dashboard| Kaio Lucas |
+|2| Implementar tela de solicitação de relatórios | Kaio Lucas |
+|3| Implementar a lógica do dashboard | Pedro Cimini |
+|4| Implementar a logica da geração de relatórios | Hélio Martins |
+
+<h3> Arquitetura </h3>
+
+Foi solicitado o uso de uma arquitetura hexagonal para o desenvolvimento desse trabalho mas pela falta de experiência de todos integrantes com a linguagem Node e VUE todas tentativas de implementar as portas e adaptadores como nas bibliografias acabou se mostrando ineficaz no nosso trabalho pois nosso código quebrava em pontos que não conseguiamos identificar os motivos.
+
+Com isso utilizamos MVC, que ficou parecido como uma arquitetura hexagonal mas sem as portas de entradas e saidas onde os adaptadores conversam diretamente com as classes de domínio e vice versa. Essa arquitetura foi selecionada pois deixava o código mais proximo de uma arquitetura hexagonal no nosso trabalho além de deixar o mesmo em uma design pattern um pouco mais organizada, mas não garantindo toda segurança e organização como um design hexagonal.
+
+* Todos os repositórios tiveram suas queries escritas usando sqlite3
+
+| # | Adaptadores | Objetivo |
+| ---- | ---- | ---- |
+|1| depositoRepositorio | Queries relacionadas ao CRUD de depósitos  |
+|2| entradaRepositorio | Queries relacionadas a entradas de novos produtos em um deposito |
+|3| materialRepositorio | Queries relacionadas ao CRUD de materiais |
+|4| saidaRepositorio| Queries relacionadas as saidas de produtos dos depositos |
+|5| transferenciaRepositorio| Queries relacionadas a transferências de produtos entre dois depositos |
+|6| unidadeRepositorio| Queries relacionadas ao CRUD de unidades |
+|7| usuarioRepositorio|  Queries relacionadas ao CRUD de usuários, além de validações de login no DB |
+
+| # | Controllers | Objetivo |
+| ---- | ---- | ---- |
+|1| depositoController | Regras de negócio relacionadas aos depósitos  |
+|2| entradaController | Regras de negócio relacionadas a entradas de novos produtos em um deposito |
+|3| materialController | Regras de negócio relacionadas aos materiais |
+|4| saidaController|Regras de negócio relacionadas as saidas de produtos dos deposito |
+|5| transferenciaController | Regras de negócio relacionadas as transferências de produtos entre dois depositos |
+|6| unidadeController | Regras de negócio relacionadas as unidades |
+|7| usuarioController |  Regras de negócio relacionadas aos usuários, além de validações de login no sistema |
+
