@@ -10,6 +10,16 @@
     "test-coverage": "nyc node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
     "test-coverage-html": "nyc --reporter=html node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
+  "nyc": {
+    "all": true,
+    "include": [
+      "controllers/*.js",
+      "repositorios/*.js"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "null"
