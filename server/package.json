@@ -5,7 +5,8 @@
   "description": "myapp",
   "main": "index.js",
   "scripts": {
-    "test": "teste"
+    "start": "nodemos server",
+    "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,9 @@
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.12"
+    "@types/cors": "^2.8.12",
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "mocha": "6.1.4"
   }
 }
