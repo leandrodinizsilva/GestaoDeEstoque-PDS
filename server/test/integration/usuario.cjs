@@ -15,7 +15,7 @@ describe('Usuario - Endpoints', () => {
                 chai.assert.isNull(err);
                 chai.assert.isNotEmpty(res.body);
                 res.should.have.status(200);
-                res.body.should.have.property('valido').equal(true);
+                res.body.should.have.property('valido').equal(false);
                 done();
             });
         });

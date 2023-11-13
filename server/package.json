@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemos server",
-    "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
+    "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
+    "test-coverage": "nyc node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
+    "test-coverage-html": "nyc --reporter=html node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "md5": "^2.3.0",
     "morgan": "^1.10.0",
+    "nyc": "^15.1.0",
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {
