@@ -38,6 +38,6 @@ jobs:
     - name: Testes de Unidade e Integração (Jest)
       run: |
         cd server
-        node index.js --test
+        node index.js --test & sleep 5
         npm run test-coverage
 
