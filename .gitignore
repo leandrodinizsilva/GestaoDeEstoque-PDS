@@ -24,6 +24,7 @@ pnpm-debug.log*
 
 #SQLITE
 server/db.sqlite
+server/dbTest.sqlite
 
 # Tests Coverage
 .nyc_output

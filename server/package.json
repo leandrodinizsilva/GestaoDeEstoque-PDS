@@ -7,10 +7,10 @@
   "scripts": {
     "start": "nodemos server",
     "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
-    "test-coverage": "c8 --all --reporter=text node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
+    "test-coverage": "nyc --all --reporter=text node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
     "test-coverage-html": "nyc --reporter=html node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
-  "c8": {
+  "nyc": {
     "all": true,
     "include": [
       "**",
