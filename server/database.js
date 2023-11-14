@@ -1,7 +1,21 @@
 import sqlite3  from 'sqlite3';
 import md5 from 'md5';
+import * as fs from 'fs';
 
-const DBSOURCE = "db.sqlite"
+var DBSOURCE = "db.sqlite"
+var testEnviroment = false
+if (process.argv.includes('--test')) {
+    testEnviroment = true
+}
+
+if (testEnviroment == true) {
+    DBSOURCE = "dbTest.sqlite"
+    try {
+        fs.unlinkSync('./' + DBSOURCE);
+    } catch (exception) {
+        console.log('DB inexistente');
+    }
+}
 
 let db = new sqlite3.Database(DBSOURCE, (err) => {
     if (err) {

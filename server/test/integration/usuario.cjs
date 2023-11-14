@@ -19,13 +19,5 @@ describe('Usuario - Endpoints', () => {
                 done();
             });
         });
-        it ('deve retornar usuário existente - 303', done => {
-            //TODO
-            done();
-        });
-        it ('deve retornar campos obrigatórios não informados ou inválidos - 500', done => {
-            //TODO
-            done();
-        });
     });
 });

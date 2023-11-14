@@ -10,6 +10,12 @@ import SaidaController from './controllers/saidaController.js';
 import TransferenciaController from './controllers/transferenciaController.js';
 import jwt from'jsonwebtoken'
 
+global.testEnviroment = false
+
+if (process.argv.includes('--test')) {
+    global.testEnviroment = true
+}
+
 const usuarioController = new UsuarioController
 const depositoController = new DepositoController
 const materialController = new MaterialController

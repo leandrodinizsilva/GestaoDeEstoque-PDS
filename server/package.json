@@ -7,12 +7,13 @@
   "scripts": {
     "start": "nodemos server",
     "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
-    "test-coverage": "nyc node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
+    "test-coverage": "c8 --all --reporter=text node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
     "test-coverage-html": "nyc --reporter=html node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
-  "nyc": {
+  "c8": {
     "all": true,
     "include": [
+      "**",
       "controllers/*.js",
       "repositorios/*.js"
     ],
@@ -30,6 +31,7 @@
   "author": "helio",
   "license": "ISC",
   "dependencies": {
+    "c8": "^8.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
