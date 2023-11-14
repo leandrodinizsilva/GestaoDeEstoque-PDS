@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -36,5 +36,6 @@ jobs:
         npm --force install
     - name: Testes de Unidade e Integração (Jest)
       run: |
-        npm run test:unit
+        cd server
+        npm run test-coverage
 
