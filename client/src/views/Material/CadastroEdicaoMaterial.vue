@@ -16,7 +16,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Unidade</label>
                             <div class="col-4" >
-                                <select v-model="material.unidadeId" class="form-control">
+                                <select v-model="material.unidadeId" id="unidade-material" class="form-control">
                                     <option value=""></option> 
                                     <option v-for="unidade in unidades" :key="unidade.id" :value="unidade.id">
                                         {{ unidade.nome }}
@@ -33,7 +33,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">R$</span>
                                     </div>
-                                    <input type="number" class="form-control" v-model="material.preco" step="0.01" min="0">
+                                    <input type="number" id="preco" class="form-control" v-model="material.preco" step="0.01" min="0">
                                 </div> 
                                 <span name="preco" class="spanErro"></span>    
                             </div>

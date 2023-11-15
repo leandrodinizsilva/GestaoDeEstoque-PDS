@@ -6,18 +6,18 @@
                 <div class="container" id="loginContainer">
                     <div class="divInput">
                         <label class="loginLabel">Login</label>
-                        <input type="text" class="form-control loginInput" v-model="usuario.login" placeholder="Insira seu login">
+                        <input type="text" id="input-login" class="form-control loginInput" v-model="usuario.login" placeholder="Insira seu login">
                         <span name="login" class="spanErro"></span>  
                     </div>
 
                     <div class="divInput">
                         <label class="loginLabel">Senha</label>
-                        <input type="password" class="form-control loginInput" v-model="usuario.senha"  placeholder="Insira sua senha">
+                        <input type="password" id="input-senha" class="form-control loginInput" v-model="usuario.senha"  placeholder="Insira sua senha">
                         <span name="senha" class="spanErro"></span>
                     </div>
 
                     <div>
-                        <a @click="irParaCadastroUsuario()" style="font-size: small; float:right; color:#34495E; cursor: pointer;">Criar Conta</a>
+                        <a @click="irParaCadastroUsuario()" id="btn-criar-conta" style="font-size: small; float:right; color:#34495E; cursor: pointer;">Criar Conta</a>
                     </div>
                                          
                     <button type="submit" id="loginButton" class="btn btn-secondary insere primaryColorBtn" >Login</button>                  

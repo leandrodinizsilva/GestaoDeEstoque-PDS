@@ -9,19 +9,19 @@
                 <div class="container" id="loginContainer">                    
                     <div class="divInput">
                         <label class="loginLabel">Nome</label>
-                        <input type="text" class="form-control loginInput" v-model="usuario.nome" placeholder="Insira seu nome">
+                        <input type="text" id="input-nome" class="form-control loginInput" v-model="usuario.nome" placeholder="Insira seu nome">
                         <span name="nome" class="spanErro"></span>  
                     </div>
 
                     <div class="divInput">
                         <label class="loginLabel">Login</label>
-                        <input type="text" class="form-control loginInput" v-model="usuario.login" placeholder="Insira seu login">
+                        <input type="text" id="input-login" class="form-control loginInput" v-model="usuario.login" placeholder="Insira seu login">
                         <span name="login" class="spanErro"></span>  
                     </div>
 
                     <div class="divInput">
                         <label class="loginLabel">Senha</label>
-                        <input type="password" class="form-control loginInput" v-model="usuario.senha"  placeholder="Insira sua senha">
+                        <input type="password" id="input-password" class="form-control loginInput" v-model="usuario.senha"  placeholder="Insira sua senha">
                         <span name="senha" class="spanErro"></span>
                     </div>
 
