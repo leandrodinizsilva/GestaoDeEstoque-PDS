@@ -17,7 +17,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Depósito</label>
                             <div class="col-4" >
-                                <select v-model="entrada.depositoId" class="form-control">
+                                <select v-model="entrada.depositoId" id="select-deposito" class="form-control">
                                     <option value=""></option> 
                                     <option v-for="deposito in depositos" :key="deposito.id" :value="deposito.id">
                                         {{ deposito.nome }}
@@ -30,7 +30,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Material</label>
                             <div class="col-4" >
-                                <select v-model="entrada.materialId" class="form-control" v-on:change="carregarUnidade()">
+                                <select v-model="entrada.materialId" id="select-material" class="form-control" v-on:change="carregarUnidade()">
                                     <option value=""></option> 
                                     <option v-for="material in materiais" :key="material.id" :value="material.id">
                                         {{ material.nome }}
@@ -47,7 +47,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">{{ unidadeMaterial }}</span>
                                     </div>
-                                    <input type="number" class="form-control" v-model="entrada.quantidade" min="0">
+                                    <input type="number" id="quantidade" class="form-control" v-model="entrada.quantidade" min="0">
                                 </div> 
                                 <span name="quantidade" class="spanErro"></span>    
                             </div>
@@ -55,7 +55,7 @@
 
                         <div id="actionButtons" style="margin-top:50px">
                             <button v-if="entrada.id > 0" @click="excluir(entrada)" type="button" style="margin-right: 5px;" class="btn btn-secondary secondaryColorBtn">Excluir</button>
-                            <button type="submit" class="btn btn-success primaryColorBtn">Salvar</button>
+                            <button type="submit" id="btn-salvar-entrada" class="btn btn-success primaryColorBtn">Salvar</button>
                             <ModalPergunta ref="modalPergunta"></ModalPergunta>
                         </div>
                     </ValidationForm>

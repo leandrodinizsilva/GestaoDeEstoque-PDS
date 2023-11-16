@@ -9,19 +9,19 @@
         <tbody>
             <tr v-for="(item, index) in data" :key="index">
                 <td v-if="showEditButton || showRemoveButton ||  showAddButton || showStock" align="center">
-                    <button title="Editar" style="margin-left:10px;"  v-if="showEditButton" type="button" @click="$emit('editar', item )" class="btn btn-primary primaryColorBtn">
+                    <button id="btn-editar" title="Editar" style="margin-left:10px;"  v-if="showEditButton" type="button" @click="$emit('editar', item )" class="btn btn-primary primaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-pen" />
                     </button>
                     <button v-if="showAddButton" style="margin-left:10px;" type="button" @click="$emit('addItem', item[id] )" class="btn btn-primary primaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-plus" />
                     </button>
-                    <button title="Excluir"  v-if="showRemoveButton" style="margin-left:10px;" type="button" @click="$emit('excluir', item )" class="btn btn-secondary secondaryColorBtn">
+                    <button id="btn-excluir" title="Excluir"  v-if="showRemoveButton" style="margin-left:10px;" type="button" @click="$emit('excluir', item )" class="btn btn-secondary secondaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-trash" />
                     </button>
-                    <button title="Exibir Estoque"  v-if="showStock" style="margin-left:10px;" type="button" @click="$emit('exibirEstoque', item )" class="btn btn-secondary secondaryColorBtn">
+                    <button id="btn-exibir-estoque" title="Exibir Estoque"  v-if="showStock" style="margin-left:10px;" type="button" @click="$emit('exibirEstoque', item )" class="btn-exibir-estoque btn btn-secondary secondaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-warehouse" />
                     </button>
-                    <button title="Alterar Permissões"  v-if="showEditAccess" style="margin-left:10px;" type="button" @click="$emit('editarPermissao', item )" class="btn btn-secondary secondaryColorBtn">
+                    <button id="btn-permissao" title="Alterar Permissões"  v-if="showEditAccess" style="margin-left:10px;" type="button" @click="$emit('editarPermissao', item )" class="btn btn-secondary secondaryColorBtn">
                         <font-awesome-icon icon="fa-solid fa-square-check" />
                     </button>
 

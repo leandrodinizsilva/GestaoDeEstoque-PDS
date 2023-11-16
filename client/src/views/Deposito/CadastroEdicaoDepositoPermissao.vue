@@ -22,7 +22,7 @@
                         <div class="form-group col-10" style="display: flex; margin-top:10px">
                             <label class="col-2">Permissão</label>
                             <div class="col-4" >
-                                <select v-model="entrada.permissaoId" class="form-control" v-on:change="carregarPermissao()">
+                                <select id="select-permissao" v-model="entrada.permissaoId" class="form-control" v-on:change="carregarPermissao()">
                                     <option value=""></option> 
                                     <option v-for="permissao in permissoes" :key="permissao.idTipoPermissao" :value="permissao.idTipoPermissao">
                                         {{ permissao.descricao }}
