@@ -19,6 +19,8 @@ async function logarNoSistema(usuario) {
     const responseLoginUsuario = await chai.request('http://localhost:8000')
     .post('/usuario/validar')
     .send(usuario);
+
+    return responseLoginUsuario;
 }
 
 async function addUsuario(usuario) {
@@ -83,16 +85,18 @@ describe('Usuario - Endpoints', () => {
         //     response.body.should.have.property('valido').equal(false);
         // });
 
-        // it ('Deve retornar nome do usuário', async() => {
-        //     usuario = new Usuario('NomeLegal', 'LoginLegal', 1 , 3)
-        //     addUsuario(usuario)
-        //     logarNoSistema(usuario)
-        //     const response = await chai.request('http://localhost:8000')
-        //     .post('/usuario/carregarNome')
-        //     .send(usuario);
-        //     console.log(response.body)
-        //     response.should.have.status(200);
-        //     response.body.should.have.property('nome').equal('NomeLegal');
-        // });
+        it ('Deve retornar nome do usuário', async() => {
+            usuario = new Usuario('NomeLegal', 'LoginLegal', 1 , 3)
+            await addUsuario(usuario)
+            responseLoginUsuario = await logarNoSistema(usuario)
+            jwtToken = responseLoginUsuario.body.token
+            console.log(jwtToken)
+            const response = await chai.request('http://localhost:8000')
+            .post('/usuario/carregarNome')
+            .set('authorization', jwtToken)
+            .send({'id': 3});
+            response.should.have.status(200);
+            response.body.should.have.property('nome').equal('NomeLegal');
+        });
     });
 });
