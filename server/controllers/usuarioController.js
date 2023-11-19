@@ -12,7 +12,7 @@ class UsuarioController{
         let promise = usuarioRepositorio.index()
         promise.then(function(result){ res.json({"data": result }) }).catch(function (error) { res.status(400).json({"mensagem": error.message}); });
 
-    }   
+    }  
     add(req, res){
         let usuario = new Usuario(req.body.nome, req.body.login, req.body.senha, req.body.tipo)
         

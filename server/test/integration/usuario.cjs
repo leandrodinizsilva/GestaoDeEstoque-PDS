@@ -1,8 +1,18 @@
+// import { response } from 'express';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 chai.should();
+
+async function logarNoSistema() {
+    const responseLoginUsuario = await chai.request('http://localhost:8000')
+    .post('/usuario/validar')
+    .send(USUARIO_VALIDO);
+
+    return true;
+}
 
 describe('Usuario - Endpoints', () => {
     describe('POST /api/usuario', () => {
@@ -27,6 +37,19 @@ describe('Usuario - Endpoints', () => {
                     done();
                 });
             });
+        });
+
+
+        it ('Deve retornar usuario logado', async() => {
+            USUARIO_VALIDO = {'login':  'UsuarioLogado', 'nome': 'UsuarioLogado', 'senha': 1, 'tipo': 3}
+            const responseAddUser = await chai.request('http://localhost:8000')
+            .post('/usuario/add')
+            .send(USUARIO_VALIDO);
+            const responseLoginUsuario = await chai.request('http://localhost:8000')
+            .post('/usuario/validar')
+            .send(USUARIO_VALIDO);
+            responseLoginUsuario.should.have.status(200);
+            responseLoginUsuario.body.should.have.property('valido').equal(true);
         });
     });
 });
