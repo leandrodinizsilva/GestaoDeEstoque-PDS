@@ -19,18 +19,13 @@ chai.should();
 
 
 describe('Deposito - Endpoints', () => {
-    before(function (done) {
+    before(async function () {
+        USUARIO_VALIDO = {'login':  'teste', 'nome': 'batata', 'senha': 1, 'tipo': 1}
+        await chai.request('http://localhost:8000').post('/usuario/add').send(USUARIO_VALIDO)
         var login = {"login": 'teste', "senha": 1}
-        chai.request('http://localhost:8000').post('/usuario/validar').send(login).end(function (err, res) {
-            if (err) {
-                done(err);
-            } else {
-                usuarioId = res.body.usuario.id
-                jwtToken = res.body.token;
-
-                done();
-            }
-        });
+        var response = await chai.request('http://localhost:8000').post('/usuario/validar').send(login)
+        usuarioId = response.body.usuario.id
+        jwtToken = response.body.token;
     });
 
     describe('POST /deposito', () => {
