@@ -26,7 +26,7 @@ class UnidadeRepositorio{
             db.run(sql, [unidade.nome, unidade.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
             })  
         }) 
     }

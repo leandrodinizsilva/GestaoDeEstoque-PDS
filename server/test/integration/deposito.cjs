@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 chai.should();
 
 
-describe('Deposito - Endpoints', () => {
+describe('Deposito', () => {
     before(async function () {
         USUARIO_VALIDO = {'login':  'teste', 'nome': 'batata', 'senha': 1, 'tipo': 1}
         await chai.request('http://localhost:8000').post('/usuario/add').send(USUARIO_VALIDO)
@@ -28,17 +28,14 @@ describe('Deposito - Endpoints', () => {
         jwtToken = response.body.token;
     });
 
-    describe('POST /deposito', () => {
-        it ('insere deposito - 201', async() => {
+    describe('deposito', () => {
+        it ('Deve adicionar depósito', async() => {
             let deposito = new Deposito(null, 'teste', usuarioId)
             var response = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)
             response.should.have.status(200);
 
         });
-    });
-
-    describe('POST /deposito', () => {
-        it ('adiciona, edita e carrega deposito - 201', async() => {
+        it ('Deve editar depósito', async() => {
             let deposito = new Deposito(null, 'teste', usuarioId)
             var response = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)
             var idDeposito = response.body.id
@@ -51,4 +48,6 @@ describe('Deposito - Endpoints', () => {
             responseLoad.body.should.have.property('nome').equal('teste2');
         });
     });
+
+
 });

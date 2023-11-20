@@ -28,7 +28,7 @@ class MaterialRepositorio{
             db.run(sql, [material.nome, material.unidadeId, material.preco], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
             })  
         })
     }

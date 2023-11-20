@@ -32,8 +32,8 @@ async function addUsuario(usuario) {
 }
 
 describe('Usuario - Endpoints', () => {
-    describe('POST /api/usuario', () => {
-        it ('deve retornar usuário criado - 201', async() => {
+    describe('POST /usuario', () => {
+        it ('Deve retornar usuário criado', async() => {
             USUARIO_VALIDO = new Usuario('teste', 'batata', 1, 1)
             const response = await chai.request('http://localhost:8000')
             .post('/usuario/add')
@@ -41,7 +41,7 @@ describe('Usuario - Endpoints', () => {
             response.should.have.status(200);
             response.body.should.have.property('valido').to.be.an('number');
         });
-        it ('deve verificar usuário ja existente - 301', done => {
+        it ('Deve verificar usuário ja existente', done => {
             USUARIO_VALIDO = new Usuario('teste', 'batata', 1, 1)
             chai.request('http://localhost:8000')
             .post('/usuario/add')
@@ -77,15 +77,6 @@ describe('Usuario - Endpoints', () => {
             responseLoginUsuario.should.have.status(200);
             responseLoginUsuario.body.should.have.property('valido').equal(false);
         });
-
-        // it ('Deve retornar todos os 3 tipos de usuários', async() => {
-        //     const response = await chai.request('http://localhost:8000')
-        //     .post('/usuario/tipo')
-        //     .send('');
-        //     console.log(response.body)
-        //     response.should.have.status(200);
-        //     response.body.should.have.property('valido').equal(false);
-        // });
 
         it ('Deve retornar nome do usuário', async() => {
             usuario = new Usuario('NomeLegal', 'LoginLegal', 1 , 3)
