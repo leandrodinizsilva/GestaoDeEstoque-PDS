@@ -20,10 +20,10 @@ class TransferenciaRepositorio{
         let sql = `INSERT INTO transferencia (materialId, depositoOrigemId, depositoDestinoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?,?)`
 
         return new Promise((resolve, reject) => {
-            db.all(sql, [transferencia.materialId, transferencia.depositoOrigemId, transferencia.depositoDestinoId, transferencia.quantidade, transferencia.data, transferencia.usuarioId], function (err, result){ 
+            db.run(sql, [transferencia.materialId, transferencia.depositoOrigemId, transferencia.depositoDestinoId, transferencia.quantidade, transferencia.data, transferencia.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
             }) 
         })
     }
