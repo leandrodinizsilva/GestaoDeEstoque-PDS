@@ -1,7 +1,7 @@
 <template>
     <div align="center">
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Materiais</h3>
-    <button v-if="this.$store.state.usuario.tipo != 1" class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Material <font-awesome-icon icon="fa-solid fa-plus"/></button>
+    <button v-if="this.$store.state.usuario.tipo != 1" id="btn-add-material" class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Material <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
         <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'material'" :showEditButton="true" :showRemoveButton="true" @editar="editar" @excluir="excluir" :id="'id'" ></DataTable>
     </div>

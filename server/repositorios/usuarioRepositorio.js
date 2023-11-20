@@ -33,7 +33,7 @@ class UsuarioRepositorio{
                             if(err)
                                 reject(err)
                             else{
-                                resolve(true)
+                                resolve(this.lastID)
                             }
                         })
                     }

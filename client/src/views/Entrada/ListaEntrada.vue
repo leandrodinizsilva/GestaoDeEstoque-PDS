@@ -1,7 +1,7 @@
 <template>
     <div align="center">
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Entradas</h3>
-    <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Entrada <font-awesome-icon icon="fa-solid fa-plus"/></button>
+    <button id="btn-entrada-material" class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Entrada <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
         <DataTable ref="dataTable" :colLabels="colLabels" :paramsUrl="{depositoId: $route.params.codigoDeposito}" :dataFields="dataFields" :dataUrl="'entrada'" :showEditButton="true" :showRemoveButton="true" @editar="editar" @excluir="excluir" :id="'id'" ></DataTable>
     </div>

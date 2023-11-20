@@ -1,7 +1,7 @@
 <template>
     <div align="center">
     <h3 class="secondaryColor" style="margin-bottom:40px">Lista Saídas</h3>
-    <button class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Saída <font-awesome-icon icon="fa-solid fa-plus"/></button>
+    <button id="btn-saida-material" class="btn btn-primary primaryColorBtn" @click="inserir" style="margin-bottom:20px">Inserir Saída <font-awesome-icon icon="fa-solid fa-plus"/></button>
     <div style="width:75vw">
         <DataTable ref="dataTable" :colLabels="colLabels" :dataFields="dataFields" :dataUrl="'saida'" :showEditButton="true" :showRemoveButton="true" @editar="editar" @excluir="excluir" :id="'id'" ></DataTable>
     </div>

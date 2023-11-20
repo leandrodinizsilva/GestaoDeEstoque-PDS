@@ -6,41 +6,41 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Home" class="nav-link" v-on:click="seleciona($event)" >Home</router-link>
+                  <router-link to="/Home" id="nav-link-home" class="nav-link" v-on:click="seleciona($event)" >Home</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Deposito" class="nav-link" v-on:click="seleciona($event)">Depósito</router-link>
+                  <router-link to="/Deposito" id="nav-link-deposito" class="nav-link" v-on:click="seleciona($event)">Depósito</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Unidade" class="nav-link" v-on:click="seleciona($event)">Unidade</router-link>
+                  <router-link to="/Unidade" id="nav-link-unidade" class="nav-link" v-on:click="seleciona($event)">Unidade</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Material" class="nav-link" v-on:click="seleciona($event)">Material</router-link>
+                  <router-link to="/Material" id="nav-link-material" class="nav-link" v-on:click="seleciona($event)">Material</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Entrada" class="nav-link" v-on:click="seleciona($event)">Entrada</router-link>
+                  <router-link to="/Entrada" id="nav-link-entrada" class="nav-link" v-on:click="seleciona($event)">Entrada</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Saida" class="nav-link" v-on:click="seleciona($event)">Saída</router-link>
+                  <router-link to="/Saida" id="nav-link-saida" class="nav-link" v-on:click="seleciona($event)">Saída</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <router-link to="/Transferencia" class="nav-link" v-on:click="seleciona($event)">Transferência</router-link>
+                  <router-link to="/Transferencia" id="nav-link-transferencia" class="nav-link" v-on:click="seleciona($event)">Transferência</router-link>
                 </li>
             </ul>
         </div>
-        <a style="color:gray;">Bem vindo</a>
+        <a id="btn-welcome" style="color:gray;">Bem vindo</a>
         <a style="color:gray; font-weight: 600;">{{getNomeUsuarioLogado}}</a>
         <a id="logout" @click="logout()">(Sair)</a>
     </nav>

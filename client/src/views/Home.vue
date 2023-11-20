@@ -19,6 +19,7 @@
           <label class="col-2">Depósito</label>
           <div class="col-4">
             <select
+              id="select-deposito"
               v-model="depositoSelecionado"
               class="form-control"
               v-on:change="carregarRelatorioMaterialPorTempo()"
@@ -36,6 +37,7 @@
           <label class="col-2" style="margin-left: 15px">Material</label>
           <div class="col-4">
             <select
+              id="select-material"
               v-model="materialSelecionado"
               class="form-control"
               v-on:change="carregarRelatorioMaterialPorTempo()"
