@@ -10,6 +10,8 @@ class Unidade{
 }
 
 const assert = chai.assert;
+const expect = chai.expect;
+
 let jwtToken;
 let usuarioId;
 
@@ -35,28 +37,35 @@ describe('Unidade', () => {
             var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id": unidadeId}).set('authorization', jwtToken)
             responseUnidadeAdd.should.have.status(200)
             responseUnidadeLoad.should.have.status(200)
-            responseUnidadeLoad.should.have.property('name').equal('Kg')
+            responseUnidadeLoad.body.should.have.property('nome').equal('Kg')
         });
         it ('Deve editar unidade', async() => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
             var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
-            let unidade2 = new Unidade(null, 'Metros', usuarioId)
+            let unidadeId = responseUnidadeAdd.body.id
+            let unidade2 = new Unidade(unidadeId, 'Metros', usuarioId)
             var responseUnidade2 = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade2).set('authorization', jwtToken)
             var responseUnidadeUpdate = await chai.request('http://localhost:8000').post('/unidade/update').send(unidade2).set('authorization', jwtToken)
-            let unidade2Id = responseUnidadeUpdate.body.id
-            var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id": unidade2Id}).set('authorization', jwtToken)
+            var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id": unidadeId}).set('authorization', jwtToken)
             responseUnidadeAdd.should.have.status(200);
             responseUnidade2.should.have.status(200);
             responseUnidadeUpdate.should.have.status(200);
             responseUnidadeLoad.should.have.status(200);
-            responseUnidadeLoad.should.have.property('name').equal('Metros')
+            responseUnidadeLoad.body.should.have.property('nome').equal('Metros')
         });
         it ('Deve deletar uma unidade', async() => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
             var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
-            var responseUnidadeDelete = await chai.request('http://localhost:8000').post('/unidade/delete').send(unidade).set('authorization', jwtToken)
+            let unidadeId = responseUnidadeAdd.body.id
+
+            var responseUnidadeDelete = await chai.request('http://localhost:8000').post('/unidade/delete').send({"id":unidadeId}).set('authorization', jwtToken)
+            var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id":unidadeId}).set('authorization', jwtToken)
+            
             responseUnidadeAdd.should.have.status(200);
             responseUnidadeDelete.should.have.status(200);
+            responseUnidadeLoad.should.have.status(200);
+            expect(responseUnidadeLoad.body).to.be.empty
+
         });
     });
 });
