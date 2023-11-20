@@ -10,6 +10,7 @@ class Deposito{
 }
 
 const assert = chai.assert;
+const expect = chai.expect;
 let jwtToken;
 let usuarioId;
 
@@ -50,6 +51,17 @@ describe('Deposito', () => {
             responseUpdate.should.have.status(200);
             responseLoad.should.have.status(200);
             responseLoad.body.should.have.property('nome').equal('teste2');
+        });
+        it ('Deve deletar depósito', async() => {
+            let deposito = new Deposito(null, 'teste', usuarioId)
+            var response = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)
+            var depositoId = response.body.id
+            var responseDelete = await chai.request('http://localhost:8000').post('/deposito/delete').send({"id": depositoId}).set('authorization', jwtToken)
+            var responseLoad = await chai.request('http://localhost:8000').post('/deposito/carregarRegistro').send({"id": depositoId}).set('authorization', jwtToken)
+            response.should.have.status(200)
+            responseLoad.should.have.status(200)
+            responseDelete.should.have.status(200)
+            expect(responseLoad.body).to.be.empty
         });
     });
 

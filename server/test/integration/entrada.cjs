@@ -38,6 +38,8 @@ class Entrada{
 }
 
 const assert = chai.assert;
+const expect = chai.expect;
+
 let jwtToken;
 let usuarioId;
 
@@ -108,6 +110,31 @@ describe('Entrada', () => {
             responseEntradaUpdate.should.have.status(200)
             responseEntradaLoad.should.have.status(200);
             responseEntradaLoad.body.should.have.property('quantidade').equal(300);
+        });
+        it ('Deve deletar entrada', async() => {
+            let unidade = new Unidade(null, 'Kg', usuarioId)
+            var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
+            var unidadeId = responseUnidadeAdd.body.id
+            let material = new Material(null, 'material', unidadeId, 200)
+            var responseMaterialAdd = await chai.request('http://localhost:8000').post('/material/add').send(material).set('authorization', jwtToken)
+            var materialId = responseMaterialAdd.body.id
+            let deposito = new Deposito(null, 'deposito', usuarioId)
+            var responseDepositoAdd = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)
+            var depositoId = responseDepositoAdd.body.id
+            var entrada = new Entrada(null, materialId, depositoId, 200, new Date(), usuarioId)
+            var responseEntradaAdd = await chai.request('http://localhost:8000').post('/entrada/add').send(entrada).set('authorization', jwtToken)
+            var entradaId = responseEntradaAdd.body.id
+            var responseEntradaDelete = await chai.request('http://localhost:8000').post('/entrada/delete').send({"id": entradaId}).set('authorization', jwtToken)
+            var responseEntradaLoad = await chai.request('http://localhost:8000').post('/entrada/carregarRegistro').send({"id": entradaId}).set('authorization', jwtToken)
+
+            responseUnidadeAdd.should.have.status(200)
+            responseMaterialAdd.should.have.status(200)
+            responseDepositoAdd.should.have.status(200)
+            responseEntradaAdd.should.have.status(200)
+            responseEntradaDelete.should.have.status(200)
+            responseEntradaLoad.should.have.status(200)
+            expect(responseEntradaLoad.body).to.be.empty
+            
         });
     });
 });
