@@ -31,17 +31,25 @@ describe('Unidade', () => {
         it ('Deve adicionar unidade', async() => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
             var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
+            let unidadeId = responseUnidadeAdd.body.id
+            var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id": unidadeId}).set('authorization', jwtToken)
             responseUnidadeAdd.should.have.status(200)
+            responseUnidadeLoad.should.have.status(200)
+            responseUnidadeLoad.should.have.property('name').equal('Kg')
         });
         it ('Deve editar unidade', async() => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
             var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
             let unidade2 = new Unidade(null, 'Metros', usuarioId)
             var responseUnidade2 = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade2).set('authorization', jwtToken)
-            var responseUnidadeUpdate = await chai.request('http://localhost:8000').post('/material/update').send(unidade2).set('authorization', jwtToken)
+            var responseUnidadeUpdate = await chai.request('http://localhost:8000').post('/unidade/update').send(unidade2).set('authorization', jwtToken)
+            let unidade2Id = responseUnidadeUpdate.body.id
+            var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id": unidade2Id}).set('authorization', jwtToken)
             responseUnidadeAdd.should.have.status(200);
             responseUnidade2.should.have.status(200);
             responseUnidadeUpdate.should.have.status(200);
+            responseUnidadeLoad.should.have.status(200);
+            responseUnidadeLoad.should.have.property('name').equal('Metros')
         });
         it ('Deve deletar uma unidade', async() => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
