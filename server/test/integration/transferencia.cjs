@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const expect = chai.expect;
 
 
 class Usuario{
@@ -174,6 +175,37 @@ describe('Transferencias', () => {
             responseTransferenciaLoad.body.should.have.property('depositoDestinoId').equal(depositoDestinoId);
             responseTransferenciaLoad.body.should.have.property('usuarioId').equal(usuarioId);
             responseTransferenciaLoad.body.should.have.property('quantidade').equal(40);
+        });
+
+        it ('Deve editar uma transferencia', async() => {
+            let unidade = new Unidade(null, 'Kg', usuarioId)
+            var unidadeId = await addUnidade(unidade, jwtToken)
+
+            let material = new Material(null, 'material', unidadeId, 200)
+            var materialId = await addMaterial(material, jwtToken)
+
+            let depositoOrigem = new Deposito(null, 'depositoOrigem', usuarioId)
+            var depositoOrigemId = await addDeposito(depositoOrigem, jwtToken);
+
+            let depositoDestino = new Deposito(null, 'depositoDestino', usuarioId)
+            var depositoDestinoId = await addDeposito(depositoDestino, jwtToken);
+
+            var entrada = new Entrada(null, materialId, depositoOrigemId, 300, new Date(), usuarioId)
+            var entradaId = await addEntrada(entrada, jwtToken)
+
+
+            var transferencia = new Transferencia(null, materialId, depositoOrigemId, depositoDestinoId, new Date(), 20, usuarioId)
+            var responseTransferenciaAdd = await chai.request('http://localhost:8000').post('/transferencia/add').send(transferencia).set('authorization', jwtToken)
+            var transferenciaId = responseTransferenciaAdd.body.id
+
+            var responseEntradaDelete = await chai.request('http://localhost:8000').post('/transferencia/delete').send({"id": transferenciaId}).set('authorization', jwtToken)
+
+            var responseTransferenciaLoad = await chai.request('http://localhost:8000').post('/transferencia/carregarRegistro').send({"id": transferenciaId}).set('authorization', jwtToken)
+
+            responseTransferenciaAdd.should.have.status(200);
+            responseTransferenciaLoad.should.have.status(200);
+            responseEntradaDelete.should.have.status(200);
+            expect(responseTransferenciaLoad.body).to.be.empty
         });
     });
 });
