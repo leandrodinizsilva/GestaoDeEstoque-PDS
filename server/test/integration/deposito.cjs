@@ -32,7 +32,11 @@ describe('Deposito', () => {
         it ('Deve adicionar depósito', async() => {
             let deposito = new Deposito(null, 'teste', usuarioId)
             var response = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)
+            var depositoId = response.body.id
+            var responseLoad = await chai.request('http://localhost:8000').post('/deposito/carregarRegistro').send({"id": depositoId}).set('authorization', jwtToken)
             response.should.have.status(200);
+            responseLoad.should.have.status(200);
+            responseLoad.body.should.have.property('nome').equal('teste');
 
         });
         it ('Deve editar depósito', async() => {
