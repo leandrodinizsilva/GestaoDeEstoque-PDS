@@ -27,6 +27,8 @@ async function addUsuario(usuario) {
     const response = await chai.request('http://localhost:8000')
     .post('/usuario/add')
     .send(usuario);
+
+    return response;
 }
 
 describe('Usuario - Endpoints', () => {
@@ -37,7 +39,7 @@ describe('Usuario - Endpoints', () => {
             .post('/usuario/add')
             .send(USUARIO_VALIDO);
             response.should.have.status(200);
-            response.body.should.have.property('valido').equal(true);
+            response.body.should.have.property('valido').to.be.an('number');
         });
         it ('deve verificar usuário ja existente - 301', done => {
             USUARIO_VALIDO = new Usuario('teste', 'batata', 1, 1)
@@ -87,14 +89,18 @@ describe('Usuario - Endpoints', () => {
 
         it ('Deve retornar nome do usuário', async() => {
             usuario = new Usuario('NomeLegal', 'LoginLegal', 1 , 3)
-            await addUsuario(usuario)
+
+            responseUsuario = await addUsuario(usuario)
+            idUsuario = responseUsuario.body['valido']
+
+
             responseLoginUsuario = await logarNoSistema(usuario)
             jwtToken = responseLoginUsuario.body.token
-            console.log(jwtToken)
+
             const response = await chai.request('http://localhost:8000')
             .post('/usuario/carregarNome')
             .set('authorization', jwtToken)
-            .send({'id': 3});
+            .send({'id': idUsuario});
             response.should.have.status(200);
             response.body.should.have.property('nome').equal('NomeLegal');
         });
