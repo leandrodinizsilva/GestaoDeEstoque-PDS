@@ -28,7 +28,7 @@ describe('Deposito', () => {
         jwtToken = response.body.token;
     });
 
-    describe('deposito', () => {
+    describe('POST /deposito', () => {
         it ('Deve adicionar depósito', async() => {
             let deposito = new Deposito(null, 'teste', usuarioId)
             var response = await chai.request('http://localhost:8000').post('/deposito/add').send(deposito).set('authorization', jwtToken)

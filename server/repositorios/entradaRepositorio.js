@@ -32,10 +32,10 @@ class EntradaRepositorio{
         let sql = `INSERT INTO entrada (materialId, depositoId, quantidade, data, usuarioId) VALUES (?,?,?,?,?)`
 
         return new Promise((resolve, reject) => {
-            db.all(sql, [entrada.materialId, entrada.depositoId, entrada.quantidade, entrada.data, entrada.usuarioId], function (err, result){ 
+            db.run(sql, [entrada.materialId, entrada.depositoId, entrada.quantidade, entrada.data, entrada.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
             }) 
         })
     }

@@ -45,7 +45,6 @@ describe('Material', () => {
             var responseMaterialAdd = await chai.request('http://localhost:8000').post('/material/add').send(material).set('authorization', jwtToken)
             var materialId = responseMaterialAdd.body.id
             var responseMaterialLoad = await chai.request('http://localhost:8000').post('/material/carregarRegistro').send({"id": materialId}).set('authorization', jwtToken)
-            materialId = responseMaterialLoad.body.id
             responseUnidadeAdd.should.have.status(200);
             responseMaterialAdd.should.have.status(200);
             responseMaterialLoad.should.have.status(200);
@@ -65,8 +64,7 @@ describe('Material', () => {
             responseMaterialAdd.should.have.status(200);
             responseMaterialLoad.should.have.status(200);
             responseMaterialLoad.body.should.have.property('nome').equal('material2');
-            responseMaterialLoad.body.should.have.property('preco').equal(300);
-            
+            responseMaterialLoad.body.should.have.property('preco').equal(300);   
         });
     });
 });
