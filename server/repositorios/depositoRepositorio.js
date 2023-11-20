@@ -83,13 +83,13 @@ class DepositoRepositorio{
             db.run(sql, [deposito.nome, deposito.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
                 let sqlPer = `INSERT INTO PermissaoUsuarioDeposito (usuarioId, depositoId, tipoPermissao) VALUES (?,?,?)`;
                 db.run(sqlPer, [deposito.usuarioId, this.lastID, 3], function(err, result) {
                     if (err)
                         reject(err)
                     else
-                        resolve("")
+                        resolve({"id": this.lastID})
                 })
             }) 
         })

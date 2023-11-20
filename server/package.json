@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemos server",
-    "test": "node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs",
+    "test": "node node_modules/mocha/bin/mocha test/**/*.cjs --recursive",
     "test-coverage": "nyc --all --reporter=text _mocha ./test/integration/usuario.cjs",
     "test-coverage-html": "nyc --reporter=html node node_modules/mocha/bin/mocha ./test/integration/usuario.cjs"
   },
