@@ -57,15 +57,12 @@ describe('Unidade', () => {
             let unidade = new Unidade(null, 'Kg', usuarioId)
             var responseUnidadeAdd = await chai.request('http://localhost:8000').post('/unidade/add').send(unidade).set('authorization', jwtToken)
             let unidadeId = responseUnidadeAdd.body.id
-
             var responseUnidadeDelete = await chai.request('http://localhost:8000').post('/unidade/delete').send({"id":unidadeId}).set('authorization', jwtToken)
             var responseUnidadeLoad = await chai.request('http://localhost:8000').post('/unidade/carregarRegistro').send({"id":unidadeId}).set('authorization', jwtToken)
-            
             responseUnidadeAdd.should.have.status(200);
             responseUnidadeDelete.should.have.status(200);
             responseUnidadeLoad.should.have.status(200);
             expect(responseUnidadeLoad.body).to.be.empty
-
         });
     });
 });
