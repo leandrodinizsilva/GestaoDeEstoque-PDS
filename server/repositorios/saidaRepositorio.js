@@ -26,10 +26,10 @@ class SaidaRepositorio{
                 reject({"message": "Quantidade de saida é superior ao montante de entrada."})
                 return
             }
-            db.all(sql, [saida.materialId, saida.depositoId, saida.quantidade, saida.data, saida.usuarioId], function (err, result){ 
+            db.run(sql, [saida.materialId, saida.depositoId, saida.quantidade, saida.data, saida.usuarioId], function (err, result){ 
                 if(err)
                     reject(err)
-                resolve("")
+                resolve({"id": this.lastID})
             }) 
         })
     }
